@@ -5,21 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
-public class Cart {
+public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    @ManyToMany(mappedBy = "wishList", cascade = CascadeType.ALL)
+    private List<Product> productList;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<CartItem> cartItemList;
-
-    @OneToOne
-    private User user;
 
 }

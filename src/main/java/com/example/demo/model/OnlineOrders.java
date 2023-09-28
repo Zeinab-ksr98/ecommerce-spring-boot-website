@@ -1,60 +1,32 @@
 package com.example.demo.model;
 
+import com.example.demo.model.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class OnlineOrders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long oid;
+    private Long id;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private double totalPrice;
-    @ManyToMany
-    List<Product> productList=new ArrayList<>();
+
+    @ManyToMany(mappedBy = "productList", cascade = CascadeType.ALL)
+    private List<Product> productList;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public OnlineOrders() {
-        productList = new ArrayList<>();
-
-    }
-
-    public OnlineOrders(Long oid, List<Product> productList) {
-        this.oid = oid;
-        this.productList = productList;
-    }
-
-    public Long getOid() {
-        return oid;
-    }
-
-    public void setOid(Long oid) {
-        this.oid = oid;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public int getNumberOfProducts() {
-        return this.productList.size();
-    }
 
 }
