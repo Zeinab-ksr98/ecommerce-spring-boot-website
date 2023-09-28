@@ -12,25 +12,22 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-
-    public String name;
-
-    public String description;
+    private Long id;
+    private String name;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public double price;
-    public double discount;
-    public String urlImg;
-    public boolean availability;
+    private double price;
+    private double discount;
+    private String urlimg;
+    public boolean availability=true;
     public boolean Deleted;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public User seller;
+    private User seller;
 
 
 }
