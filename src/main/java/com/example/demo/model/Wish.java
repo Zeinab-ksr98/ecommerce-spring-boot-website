@@ -17,6 +17,4 @@ public class Wish {
     private Long id;
     @ManyToMany(mappedBy = "wishList", cascade = CascadeType.ALL)
     private List<Product> productList;
-
-
 }
