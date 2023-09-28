@@ -11,7 +11,7 @@ public interface CartMapper {
     CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
 
     @Mapping(source = "cartItemList", target = "cartItemList")
-    CartDto mapEntityToDto(com.example.demo.model.Cart entity);
+    CartDto mapEntityToDto(Cart entity);
 
     @Mapping(source = "cartItemList", target = "cartItemList")
     Cart mapDtoToEntity(CartDto dto);
