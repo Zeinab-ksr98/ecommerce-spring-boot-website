@@ -15,6 +15,6 @@ public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany(mappedBy = "wishList", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Product> productList;
 }

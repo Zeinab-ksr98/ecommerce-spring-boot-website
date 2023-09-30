@@ -34,17 +34,19 @@ public class User {
     @Column(name = "role")
     private List<Role> roles;
 
+    private boolean enabled;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OnlineOrders> orders;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne
     private Wish wish;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Address> addresses;
 
 

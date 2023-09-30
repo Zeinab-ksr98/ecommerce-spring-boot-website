@@ -21,7 +21,7 @@ public class OnlineOrders {
     private OrderStatus status;
     private double totalPrice;
 
-    @ManyToMany(mappedBy = "productList", cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Product> productList;
 
     @ManyToOne
