@@ -90,9 +90,15 @@ public class UserService {
 //        return userRepository.save(user);
 //    }
     @Autowired
-    private static UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private WishService wishService;
 
     public Optional<User> findUserByUserName(String username){
         return userRepository.findUserByUserName(username);
@@ -110,13 +116,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public static User getUserById(UUID id){
+    public User getUserById(UUID id){
         return userRepository.findById(id).orElse(null);
     }
 
     public User createUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone());
+        wishService.createWish(newUser.getWish());
+        cartService.createWish(newUser.getCart());
+        return userRepository.save(newUser);
     }
 
     public User updateUser(UUID id, String userName, String password){

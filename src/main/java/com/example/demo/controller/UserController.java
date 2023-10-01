@@ -24,14 +24,14 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/create",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public String createUser(@RequestBody User user){
+    @PostMapping(value = "/create")
+    public String createUser(@ModelAttribute("newuser") User user){
         if(userService.userNameExists(user.getUsername()))
             return "account/SignIn";
         if(userService.userEmailExists(user.getEmail()))
             return "account/SignIn";
         try {
-            User newUser = userService.createUser(user);
+            userService.createUser(user);
             return "Home";
         } catch (Exception e) {
             return "account/SignIn";

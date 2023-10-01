@@ -61,8 +61,7 @@ public class User {
         this.phone=phone;
         this.roles=new ArrayList<>();
         this.roles.add(Role.USER);
-        this.cart=new Cart(getId());
+        this.cart=new Cart();
         this.wish=new Wish();
-
     }
 }

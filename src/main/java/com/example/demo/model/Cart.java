@@ -25,7 +25,4 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Cart(UUID userid) {
-        this.user =UserService.getUserById(userid) ;
-    }
 }
