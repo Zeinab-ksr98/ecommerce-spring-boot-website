@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container bg-white py-4 rounded shadow mt-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Order List</h3>
+        <a th:href="@{/add-order-form}" class="btn btn-secondary" role="button">Create</a>
+    </div>
+    <table class="table  table-bordered rounded ">
+        <thead class="table-primary">
+        <tr>
+            <th>Id</th>
+            <th>Products</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td>
+                <ul class="list-unstyled">
+                    <li th:each="product : ${order.productList}">
+                        <p th:text="${product.name}"></p>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <div class="btn-group">
+
+                    <a th:href="@{/update-order/{ID}(ID=${order.id})}" class="btn" role="button">
+                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/create-new.png" alt="create-new"/>
+                    </a>
+                    <a th:href="@{/delete-order/{ID}(ID=${order.id})}" class="btn" role="button">
+                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/delete-forever.png" alt="delete-forever"/>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

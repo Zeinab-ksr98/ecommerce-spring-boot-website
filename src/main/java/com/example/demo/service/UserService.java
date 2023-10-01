@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CartDto;
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.Address;
+import com.example.demo.model.Cart;
 import com.example.demo.model.User;
 import com.example.demo.model.enums.Role;
 import com.example.demo.repository.UserRepository;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -86,7 +90,7 @@ public class UserService {
 //        return userRepository.save(user);
 //    }
     @Autowired
-    private UserRepository userRepository;
+    private static UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -106,7 +110,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(UUID id){
+    public static User getUserById(UUID id){
         return userRepository.findById(id).orElse(null);
     }
 
@@ -153,6 +157,12 @@ public class UserService {
     public boolean validId(UserDetails userDetails, String id){
         UserInfoDetails userInfoDetails = (UserInfoDetails) userDetails;
         return userInfoDetails.getUserId().equals(id);
+    }
+    public UserDto mapToDto(User user){
+        return new UserDto(user.getId(),user.getUsername(),user.getEmail(),user.getPassword(),user.getRoles(),user.getPhone(),user.isDeleted(),user.getOrders(),user.getWish().getId(),user.getCart().getId(), user.getAddresses());
+    }
+    public List<UserDto> mapToDtoList(List<User> users){
+        return users.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
 }

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
+    <style>
+        /* Basic styling for the admin header */
+        .admin-header {
+            background: linear-gradient(to right, #0077b6, #0496ff);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .admin-logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .admin-logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .admin-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .admin-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .admin-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .admin-profile p {
+            font-size: 16px;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+<!--<header th:fragment="custumerheader" class=" text-emphasis-primary">-->
+
+<!--    <nav class="navbar navbar-expand-lg ">-->
+<!--        <div class="container">-->
+<!--            <div class="admin-logo">-->
+<!--                <img src="admin-logo.png" alt="Admin Logo">-->
+<!--                <h1>Admin Dashboard</h1>-->
+<!--            </div>-->
+<!--            <nav class="admin-nav">-->
+<!--                <ul>-->
+<!--                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 20h-3v-1h-2v1H6a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h8l4 4v10a2 2 0 0 1-2 2zm-1-10h-2v-6H9v6H7V7h10v3zm2 9H6a1 1 0 0 0-1 1v1h16v-1a1 1 0 0 0-1-1z"/></svg> Dashboard</a></li>-->
+<!--                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 17.95c-.12.03-.24.05-.36.05s-.24-.02-.36-.05C8.31 19.8 7.19 19 6 19s-2.31.8-3.64 2.05c-.16.21-.34.39-.52.56a1 1 0 0 0 0 1.4 1 1 0 0 0 1.41 0c.17-.17.35-.35.56-.52C5.2 17.31 6 16.19 6 15s-.8-2.31-2.05-3.64c-.21-.16-.39-.34-.56-.52a1 1 0 0 0-1.4 0 1 1 0 0 0 0 1.41c.17.17.35.35.52.52C3.8 13.31 3 14.42 3 15s.8 2.31 2.05 3.64c.16.21.34.39.52.56a1 1 0 0 0 1.4 0 1 1 0 0 0 0-1.41c-.17-.17-.35-.35-.56-.52C6.8 16.69 6 15.58 6 15s.8-1.69 2.05-2.36c.21-.16.39-.34.56-.51.15-.21.32-.39.49-.56a1 1 0 0 0 0-1.41 1 1 0 0 0-1.41 0c-.17.17-.34.35-.49.51C8.69 8.2 9 6.64 9 5c0-1.99-1.01-3.87-2.68-4.95a.997.997 0 1 0-1.12 1.66C6.67 3.45 7 4.19 7 5c0 .76-.3 1.45-.77 1.98C5.59 7.3 5 8.61 5 10c0 1.38.59 2.69 1.23 3.02.47.31.77.89.77 1.98 0 .81-.33 1.55-.86 2.1-.17.17-.35.35-.52.52C3.8 16.69 3 17.8 3 19s.8 2.31 2.05 3.64c.16.21.34.39.52.56.37.37.85.64 1.39.77a.996.996 0 0 0 1.12-1.66C4.33 20.55 3 16.89 3 12c0-5.52 4.48-10 10-10s10 4.48 10 10h-2c0-4.41-3.59-8-8-8zm-2-7h4v4h-4z"/></svg> Products</a></li>-->
+<!--                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 2H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6v-2H4V4h6v4zm4 0v14h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-6v2h6z"/></svg> Orders</a></li>-->
+<!--                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 17.95c-.12.03-.24.05-.36.05s-.24-.02-.36-.05C8.31 19.8 7.19 19 6 19s-2.31.8-3.64 2.05c-.16.21-.34.39-.52.56a1 1 0 0 0 0 1.4 1 1 0 0 0 1.41 0c.17-.17.35-.35.56-.52C5.2 17.31 6 16.19 6 15s-.8-2.31-2.05-3.64c-.21-.16-.39-.34-.56-.52a1 1 0 0 0-1.4 0 1 1 0 0 0 0 1.41c.17.17.35.35.52.52C3.8 13.31 3 14.42 3 15s.8 2.31 2.05 3.64c.16.21.34.39.52.56a1 1 0 0 0 1.4 0 1 1 0 0 0 0-1.41c-.17-.17-.35-.35-.56-.52C6.8 16.69 6 15.58 6 15s.8-1.69 2.05-2.36c.21-.16.39-.34.56-.51.15-.21.32-.39.49-.56a1 1 0 0 0 0-1.41 1 1 0 0 0-1.41 0c-.17.17-.34.35-.49.51C8.69 8.2 9 6.64 9 5c0-1.99-1.01-3.87-2.68-4.95a.997.997 0 1 0-1.12 1.66C6.67 3.45 7 4.19 7 5c0 .76-.3 1.45-.77 1.98C5.59 7.3 5 8.61 5 10c0 1.38.59 2.69 1.23 3.02.47.31.77.89.77 1.98 0 .81-.33 1.55-.86 2.1-.17.17-.35.35-.52.52C3.8 16.69 3 17.8 3 19s.8 2.31 2.05 3.64c.16.21.34.39.52.56.37.37.85.64 1.39.77a.996.996 0 0 0 1.12-1.66C4.33 20.55 3 16.89 3 12c0-5.52 4.48-10 10-10s10 4.48 10 10h-2c0-4.41-3.59-8-8-8zm-2-7h4v4h-4z"/></svg> Customers</a></li>-->
+<!--                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 2H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6v-2H4V4h6v4zm4 0v14h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-6v2h6z"/></svg> Settings</a></li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+<!--            <div class="admin-profile">-->
+<!--                <img src="admin-avatar.jpg" alt="Admin Avatar">-->
+<!--                <p>Admin Name</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--</header>-->
+<header th:fragment="header" class=" text-emphasis-primary">
+
+    <nav class="navbar navbar-expand-lg " style="background:linear-gradient(to left, #6a6f8c,#6a6f8c, lightblue);">
+        <div class="container-fluid">
+            <div class="navbar-brand text-light" >
+                <img width="50" height="50" th:src="@{./logo1.png}" alt="online-store"/>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/admin}"><h5>Home</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/get-all-orders}"><h5>Orders</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/manage-products}"><h5>Products</h5></a>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/manage-category}"><h5>Categories</h5></a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"></ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" th:href="@{/logout}"><h6>Logout</h6></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Form</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Add Product</h2>
+    <form action="#" th:action="@{add-product-to-list}" th:object="${product}" method="post">
+        <div class="form-group">
+            <label for="pname">Product Name:</label>
+            <input type="text" class="form-control" id="pname" name="pname" th:field="*{name}" required>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category" name="category" th:each="cat : ${categories}">
+                <option th:value="${cat.name}" th:text="${cat.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="pprice">Price:</label>
+            <input type="number" class="form-control" id="pprice" name="pprice" th:field="*{price}" required>
+            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="description">description</label>
+            <textarea id="description" name="description" th:value="*{description}"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="urlimg">image for your product:</label>
+            <input type="text" class="form-control" id="urlimg" name="urlimg" th:field="*{urlimg}" required>
+            <span th:if="${#fields.hasErrors('urlimg')}" th:errors="*{urlimg}" class="text-danger"></span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+</body>
+</html>

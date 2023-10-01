@@ -53,4 +53,16 @@ public class User {
     private String phone;
 
     public boolean deleted;
+
+    public User(String username, String email, String password,String phone) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone=phone;
+        this.roles=new ArrayList<>();
+        this.roles.add(Role.USER);
+        this.cart=new Cart(getId());
+        this.wish=new Wish();
+
+    }
 }

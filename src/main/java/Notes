@@ -1,0 +1,7 @@
+in my case i used dto to avoid stack overflow in bidirectional relations
+which are in this project:cart with user and order with user
+this conflect is created cause in the case of the admin he shall manage the his orders and have the customer name and the order is set for a customer
+when managing it from the admin side an infinit loop is created in the responce due tothe presence of user in order and orderlist in user
+and the same is applied in the case of cart and user where on check out the cart will be transfered into order in the customer name
+
+dtos are mainly used to change the

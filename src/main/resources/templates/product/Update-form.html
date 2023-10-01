@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Management System</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
+    <script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}"></script>
+    <style>
+    .category {
+            overflow: hidden;
+            position: relative;
+        }
+        .category:hover .frproductinner.innerposition {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        .frproductinner.innerposition {
+                background: #fff none repeat scroll 0 0;
+                bottom: -20px;
+                left: 0;
+                opacity: 0;
+                padding: 30px 20px;
+                position: absolute;
+                text-align: left;
+                transition: all 0.5s ease 0s;
+                width: 100%;
+        }
+        .frproductinner  {
+            transition: all 0.3s ease 0s;
+        }
+        .pill-checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill-checkbox {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+
+        .centered-form {
+            max-width: 70%; /* Adjust the width as needed */
+            margin: 0 auto; /* This centers the form horizontally */
+        }
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">
+        <img width="40" height="40" src="https://img.icons8.com/nolan/64/product.png" alt="product"/>
+        update Product Details
+    </h2>
+    <form th:action="@{/update-product}" th:object="${product}" method="post" class="centered-form">
+        <input type="hidden" class="form-control" id="id" th:field="*{id}" required th:value="${product.id}">
+        <div class="pill-checkbox-container">
+                <div class="category">
+                    <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" th:value="*{name}">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" th:each="cat : ${categories}">
+                        <option th:value="*{category}" th:text="${cat.name}"></option>
+                    </select>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" th:value="*{price}">
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <label for="discount">Discount:</label>
+                    <input type="number" id="discount" name="discount" th:value="*{discount}">
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" th:value="*{description}"></textarea>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <label for="urlimg">Image URL:</label>
+                    <img th:src="'./'+${urlimg}">
+                    <input type="text" id="urlimg" name="urlimg" th:value="*{urlimg}">
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <label for="availability">available:</label>
+                    <input type="checkbox" id="availability" name="availability" onchange="updateAvailability(this)"  th:value="${availability}" th:checked="${availability}" >
+                    </div>
+                    <br>
+
+                </div>
+            </label>
+        </div>
+
+        <br/>
+        <button id="createButton" type="submit" class="btn btn-primary">modify Product</button>
+    </form>
+</div>
+<br/>
+<div th:replace="fragments/footer :: footer"></div>
+<script>
+    function updateAvailability(checkbox) {
+        var availabilityInput = document.getElementById("availability");
+        if (checkbox.checked) {
+            availabilityInput.value = "true";
+        } else {
+            availabilityInput.value = "false";
+        }
+    }
+</script>
+
+</body>
+</html>

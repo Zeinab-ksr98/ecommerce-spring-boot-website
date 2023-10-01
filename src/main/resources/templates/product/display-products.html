@@ -1,0 +1,139 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Courses</title>-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="fragments/header :: header"></div>-->
+<!--<div class="container bg-white py-4 rounded shadow mt-2">-->
+<!--    <div class="d-flex justify-content-between align-items-center mb-3">-->
+<!--        <h3 class="mb-0">Products List</h3>-->
+<!--        <a th:href="@{/add-product-form}" class="btn btn-secondary" role="button">Create</a>-->
+<!--    </div>-->
+<!--    <table class="table table-bordered rounded">-->
+<!--        <thead class="table-primary">-->
+<!--        <tr>-->
+<!--            <th>Category</th>-->
+<!--            <th>Product Name</th>-->
+<!--            <th>Price</th>-->
+<!--            <th>Available</th>-->
+<!--            <th>Actions-->
+<!--                <a th:href="@{/manage-products-Filtered}"><img width="25" height="25" src="https://img.icons8.com/fluency/48/sorting-options.png" alt="sorting-options"/></a>-->
+<!--            </th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="product : ${products}">-->
+<!--            <td th:text="${product.category}"></td>-->
+<!--            <td th:text="${product.name}"></td>-->
+<!--            <td th:text="${product.price}"></td>-->
+<!--            <td>-->
+<!--                <span th:if="${product.isitavailability()}">Available</span>-->
+<!--                <span th:unless="${product.isitavailability()}">Out of Stock</span>-->
+<!--            </td>-->
+
+<!--            <td>-->
+<!--                <a th:href="@{/update-product/{ID}(ID=${product.id})}" class="btn" role="button">-->
+<!--                    <img width="40" height="40" src="https://img.icons8.com/nolan/64/create-new.png" alt="create-new"/>-->
+<!--                </a>-->
+<!--                <a th:href="@{/delete-product/{ID}(ID=${product.id})}" class="btn " role="button">-->
+<!--                    <img width="40" height="40" src="https://img.icons8.com/nolan/64/delete-forever.png" alt="delete-forever"/>-->
+<!--                </a>-->
+
+
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+<!--<div th:replace="fragments/footer :: footer"></div>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
+    <style>
+        .product-card {
+            transition: border-color 0.3s, background-color 0.3s;
+            border: 2px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card.available {
+            background-color: white;
+            border: 2px solid white;
+        }
+
+        .product-card.instock {
+            background-color: lightgray;
+            border: 2px solid lightgray;
+        }
+
+        .product-card:hover {
+            background-color: lightblue;
+        }
+
+        .product-card .product-details {
+            display: none;
+            position: absolute;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container  py-4 rounded shadow mt-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Products List</h3>
+        <a th:href="@{/add-product-form}" class="btn btn-secondary" role="button">Create</a>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4" th:each="product : ${products}">
+            <div th:class="${product.isitavailability()} ? 'product-card available' : 'product-card instock'">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span th:text="${product.name}"></span>
+                        <span class="badge badge-primary" th:if="${product.discount != 0}" th:text="${'-' + product.discount + '%'}">Discount</span>
+                    </h5>
+                    <p class="card-text">
+                        <span th:if="${product.category != null}" th:text="${'Category: ' + product.category.name}"></span>
+                        <span th:unless="${product.category != null}">Category: Not Specified</span>
+                    </p>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <span th:if="${product.discount != 0}" style="text-decoration: line-through;" th:text="${'Original$' + product.price}"></span>
+                        <span th:text="${'$' + (product.price - (product.price * product.discount / 100))}"></span>
+                    </h6>
+                </div>
+
+                <div class="card-footer">
+                    <a th:href="@{/update-product/{ID}(ID=${product.id})}" class="btn" role="button">
+                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/create-new.png" alt="create-new"/>
+                    </a>
+                    <a th:href="@{/delete-product/{ID}(ID=${product.id})}" class="btn " role="button">
+                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/delete-forever.png" alt="delete-forever"/>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
+
