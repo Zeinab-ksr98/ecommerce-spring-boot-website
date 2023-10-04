@@ -121,7 +121,13 @@ public class UserService {
     }
 
     public User createUser(User user){
-        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone());
+        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(),false );
+        wishService.createWish(newUser.getWish());
+        cartService.createWish(newUser.getCart());
+        return userRepository.save(newUser);
+    }
+    public User createAdmin(User user){
+        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(),true );
         wishService.createWish(newUser.getWish());
         cartService.createWish(newUser.getCart());
         return userRepository.save(newUser);

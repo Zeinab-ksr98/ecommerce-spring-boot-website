@@ -6,6 +6,7 @@ import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,7 @@ public class OrderController {
     }
 
     @GetMapping("/get-orders")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<OnlineOrders> getAllOrders() {
         return orderService.getAllOrders();
 
@@ -57,6 +59,10 @@ public class OrderController {
 
 
 //    methods with model
+@GetMapping(value = "/checkout")
+public String checkout (Model model) {
+    return "order/checkout";
+}
     @GetMapping(value = "/get-all-orders")
     public String displayOrders(Model model) {
         model.addAttribute("orders",getAllOrders());

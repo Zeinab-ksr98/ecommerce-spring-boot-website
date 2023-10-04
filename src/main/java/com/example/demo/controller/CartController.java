@@ -8,6 +8,7 @@ import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 public class CartController {
 
@@ -24,7 +25,7 @@ public class CartController {
     private final ProductService productService;
 
     @Autowired
-    private  CartController(CartService cartService, UserService userService, ProductService productService){
+    public  CartController(CartService cartService, UserService userService, ProductService productService){
         this.cartService = cartService;
         this.userService = userService;
         this.productService = productService;

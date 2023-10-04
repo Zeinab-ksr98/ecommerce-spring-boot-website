@@ -54,13 +54,17 @@ public class User {
 
     public boolean deleted;
 
-    public User(String username, String email, String password,String phone) {
+
+    public User(String username, String email, String password,String phone,boolean WanaCreateAdmin) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phone=phone;
         this.roles=new ArrayList<>();
-        this.roles.add(Role.USER);
+        if(WanaCreateAdmin)
+            this.roles.add(Role.ADMIN);
+        else
+            this.roles.add(Role.USER);
         this.cart=new Cart();
         this.wish=new Wish();
     }

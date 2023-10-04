@@ -18,48 +18,47 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class securityConfig  {
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/**","/products/**","/SignIn").permitAll();
-                    auth.requestMatchers("/cart/**").authenticated();
-                })
-                .formLogin(Customizer.withDefaults())
-                .logout(logout -> {
-                    logout.logoutUrl("/logout");
-                    logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
-                })
-                .build();
-    }
-
 //    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-//        return httpSecurity
-//                .csrf(AbstractHttpConfigurer :: disable)
-//                //set up the apis that can be a accessed by all (permit all())
-//                .authorizeHttpRequests( auth -> auth
-////                                .requestMatchers("/visitor-api", "/save","/home").permitAll()
-////                                .requestMatchers("/**").hasAnyRole("admin","user")
-//                                .requestMatchers("/**").permitAll()
-//
-////                        .requestMatchers("/admin-api", "/user-api","/get-all-products").authenticated()
-//                )
-//
-//                //login
-//                .formLogin(login->{
-////                    Customizer.withDefaults();
-//                    login.loginPage("/login");
-//                    login.defaultSuccessUrl("/get-all-products");
-//                }
-//                )
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/users/**","/SignIn").permitAll();
+//                    auth.requestMatchers("/cart/**").authenticated();
+//                })
+//                .formLogin(Customizer.withDefaults())
 //                .logout(logout -> {
 //                    logout.logoutUrl("/logout");
-//                    logout.logoutSuccessUrl("/visitor-api");
 //                    logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
 //                })
 //                .build();
 //    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+        return httpSecurity
+                .csrf(AbstractHttpConfigurer :: disable)
+                //set up the apis that can be a accessed by all (permit all())
+                .authorizeHttpRequests( auth -> auth
+//                                .requestMatchers("/visitor-api", "/save","/home").permitAll()
+//                                .requestMatchers("/**").hasAnyRole("admin","user")
+//                                .requestMatchers("/**").permitAll()
+
+                        .requestMatchers("/get-orders").authenticated()
+                )
+
+                //login
+                .formLogin(login->{
+                    login.loginPage("/SignIn").loginProcessingUrl("/login").permitAll();
+                    login.defaultSuccessUrl("/get-orders");
+                }
+                )
+                .logout(logout -> {
+                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/visitor-api");
+                    logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
+                })
+                .build();
+    }
 //the commented method can be used alone along with passencoder (without userInfodetails ...)
     //this can only be done manually and saved in the memory(will be rermoved as soon as you rerun and all passwords are shown in the code -->less secure)
     //to let the security mapp between the user details in the data base and the

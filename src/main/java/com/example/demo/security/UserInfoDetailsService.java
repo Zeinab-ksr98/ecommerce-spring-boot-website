@@ -19,9 +19,9 @@ public class UserInfoDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String credential) throws UsernameNotFoundException {
         Optional<User> user;
-        if(ValidationHelper.isValidEmail(credential))
-            user = userService.findUserByEmail(credential);
-        else
+//        if(ValidationHelper.isValidEmail(credential))
+//            user = userService.findUserByEmail(credential);
+//        else
             user = userService.findUserByUserName(credential);
         return user.map(UserInfoDetails::new).orElseThrow(() -> new UsernameNotFoundException("The user credential is not found"));
     }
