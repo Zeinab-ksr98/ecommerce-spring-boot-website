@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.model.enums.Role;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,11 @@ public class UserController {
             return "account/SignIn";
         try {
             userService.createUser(user);
-            return "Home";
+//            if (user.getRoles().contains( Role.ADMIN)) {
+//                return "redirect:/manage-category";
+//            }
+//            else
+                return "redirect:/home";
         } catch (Exception e) {
             return "account/SignIn";
         }
