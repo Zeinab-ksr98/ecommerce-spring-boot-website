@@ -120,8 +120,8 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User createUser(User user){
-        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(),false );
+    public User createUser(User user, boolean isAdmin){
+        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(), isAdmin);
         wishService.createWish(newUser.getWish());
         cartService.createWish(newUser.getCart());
         return userRepository.save(newUser);

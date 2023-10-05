@@ -25,6 +25,7 @@ public class Product {
     private String urlimg;
     public boolean availability=true;
     public boolean Deleted;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User seller;

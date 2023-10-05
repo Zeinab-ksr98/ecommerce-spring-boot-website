@@ -28,52 +28,9 @@ public class OrderController {
         this.productService = productService;
     }
 
-    @GetMapping("/get-orders")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<OnlineOrders> getAllOrders() {
-        return orderService.getAllOrders();
-
-    }
-
-    @GetMapping(value = "/get-order/{id}")
-    public OnlineOrders getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
-    }
-
-    @PostMapping(value = "/create-order")
-    public OnlineOrders createOrder(@RequestBody OnlineOrders onlineOrders) {
-        return orderService.createOrder(onlineOrders);
-    }
-
-    @PutMapping(value = "/update-order/{id}")
-    public OnlineOrders updateOrder(@PathVariable Long id, @RequestBody OnlineOrders onlineOrders) {
-        onlineOrders.setId(id);
-        return orderService.updateOrder(onlineOrders);
-    }
-
-    @DeleteMapping("/delete-order/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
-    }
 
 
-
-//    methods with model
-@GetMapping(value = "/checkout")
-public String checkout (Model model) {
-    return "order/checkout";
-}
-    @GetMapping(value = "/get-all-orders")
-    public String displayOrders(Model model) {
-        model.addAttribute("orders",getAllOrders());
-        return "order/display-orders";
-    }
-    @GetMapping(value = "/delete-order/{ID}")
-    public String deleteOrders(@PathVariable long ID){
-        deleteOrder(ID);
-        return "redirect:/get-all-orders";
-    }
-
+    //Create new Order
     @GetMapping(value="/add-order-form")
     public String showOrderForm(Model model) {
         model.addAttribute("order",new OnlineOrders());
@@ -85,12 +42,15 @@ public String checkout (Model model) {
         if (bindingResult.hasErrors()) {
             return "Order-form";
         }
-        createOrder(order);
+        orderService.createOrder(order);
         return "redirect:/get-all-orders";
     }
+
+
+    //Update Orders APIs
     @GetMapping(value = "/update-order/{ID}")
     public String UpdateOrders(@PathVariable long ID,Model model)  {
-        model.addAttribute("order",getOrderById(ID) );
+        model.addAttribute("order",orderService.getOrderById(ID));
         model.addAttribute("products", productService.getAllProducts());
         return "order/Update-form";
     }
@@ -100,10 +60,31 @@ public String checkout (Model model) {
         if (bindingResult.hasErrors()) {
             return "order/Update-form";
         }
-        updateOrder(order.getId(),order);
+        orderService.updateOrder(order);
         return "redirect:/get-all-orders";
 
     }
 
+    // Get all orders
+    @GetMapping(value = "/get-all-orders")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String displayOrders(Model model) {
+        model.addAttribute("orders",orderService.getAllOrders());
+        return "order/display-orders";
+    }
+
+
+    // Checkout
+    @GetMapping(value = "/checkout")
+    public String checkout (Model model) {
+        return "order/checkout";
+    }
+
+    //Deleting Order
+    @GetMapping(value = "/delete-order/{ID}")
+    public String deleteOrders(@PathVariable long ID){
+        orderService.deleteOrder(ID);
+        return "redirect:/get-all-orders";
+    }
 
 }

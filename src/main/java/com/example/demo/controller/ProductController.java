@@ -25,63 +25,25 @@ public class ProductController {
         this.categoryservice = categoryservice;
     }
 
-    @GetMapping("/get-products")
-    public List<Product> getAllProducts() {
-        return productService.getAllAvailableProducts();
-    }
-    @GetMapping("/Filter-products")
-    public List<Product> FilterAllProducts(Long id) {
-        return productService.FilterAllAvailableProductsByCategory(id);
-    }
-    public List<Product> manageAllProducts() {
-        return productService.getAllProducts();
-    }
-    @GetMapping("/manage-products-filter")
-    public List<Product> manageAllProductsFiltered() {
-        return productService.sortAllProducts();
-    }
-
-    @GetMapping(value = "/get-product/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
-    }
-
-    @PostMapping(value = "/create-product")
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
-    }
-
-    @PutMapping(value = "/update-product/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        product.setId(id);
-        return productService.updateProduct(product);
-    }
-
-    @DeleteMapping("/delete-product/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-    }
 
 
-//with the model
-    @GetMapping(value = "/get-all-products")
-    public String getProducts(Model model) {
-        model.addAttribute("products", getAllProducts());
-        return "display-products-c";
-    }
+    //No idea
     @GetMapping(value = "/Filter-all-products/{id}")
     public String categoriesProducts(@PathVariable long id,Model model) {
-        model.addAttribute("products", FilterAllProducts(id));
+        model.addAttribute("products", productService.FilterAllAvailableProductsByCategory(id));
         return "display-products-c";
     }
-    @GetMapping(value = "/manage-products")
-    public String manageProducts(Model model) {
-        model.addAttribute("products",manageAllProducts());
-        return "product/display-products";}
+
+
+    // No idea
     @GetMapping(value = "/manage-products-Filtered")
     public String manageProductsSorted(Model model) {
-        model.addAttribute("products",manageAllProductsFiltered());
-        return "product/display-products";}
+        model.addAttribute("products",productService.sortAllProducts());
+        return "product/display-products";
+    }
+
+
+    // Adding a product
     @GetMapping(value="/add-product-form")
     public String showProductForm(Model model){
         model.addAttribute("product",new Product());
@@ -93,18 +55,15 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "product/product-form";
         }
-        createProduct(product);
+        productService.createProduct(product);
         return "redirect:/get-all-products";
     }
 
-    @GetMapping(value = "/delete-product/{ID}")
-    public String deleteAProduct(@PathVariable long ID) {
-        deleteProduct(ID);
-        return "redirect:/get-all-products";
-    }
+
+    //Updating Product APIs
     @GetMapping(value = "/update-product/{ID}")
     public String UpdateOrders(@PathVariable long ID,Model model)  {
-        model.addAttribute("product",getProductById(ID) );
+        model.addAttribute("product",productService.getProductById(ID) );
         model.addAttribute("categories",categoryservice.getAllCategories() );
         return "product/Update-form";
     }
@@ -114,9 +73,32 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "product/Update-form";
         }
-        updateProduct(product.getId(),product);
+        productService.updateProduct(product);
         return "redirect:/manage-products";
 
+    }
+
+
+    // Get all available products
+    @GetMapping(value = "/get-all-products")
+    public String getProducts(Model model) {
+        model.addAttribute("products", productService.getAllAvailableProducts());
+        return "display-products-c";
+    }
+
+    //Get al Products
+    @GetMapping(value = "/manage-products")
+    public String manageProducts(Model model) {
+        model.addAttribute("products",productService.getAllProducts());
+        return "product/display-products";
+    }
+
+
+    //Deleting Product API
+    @GetMapping(value = "/delete-product/{ID}")
+    public String deleteAProduct(@PathVariable long ID) {
+        productService.deleteProduct(ID);
+        return "redirect:/get-all-products";
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,25 @@ import java.util.UUID;
 @RequestMapping("/users")
 
 public class UserController {
-    private final UserService userService;
+
+    private final  UserService userService;
+
     @Autowired
-    private UserController(UserService userService){
+    public UserController(UserService userService){
         this.userService = userService;
     }
 
+    @GetMapping(value = "/create-initial-admin")
+    public String createInitialAdmin(){
+        User user = new User("mhmd", "mhmd@cx.com", "123", "81344864", true);
+        try{
+            User admin = userService.createUser(user,true);
+            System.out.println("done");
+            return "Admin Successfully Created";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
 
     @PostMapping(value = "/create")
     public String createUser(@ModelAttribute("newuser") User user){
@@ -32,18 +46,15 @@ public class UserController {
         if(userService.userEmailExists(user.getEmail()))
             return "account/SignIn";
         try {
-            userService.createUser(user);
-//            if (user.getRoles().contains( Role.ADMIN)) {
-//                return "redirect:/manage-category";
-//            }
-//            else
-                return "redirect:/home";
+            userService.createUser(user,false);
+            return "redirect:/home";
         } catch (Exception e) {
             return "account/SignIn";
         }
     }
 
     @GetMapping(value = "/",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> getUsers(){
         try{
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);

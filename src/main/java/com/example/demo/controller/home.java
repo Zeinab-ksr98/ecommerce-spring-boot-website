@@ -23,10 +23,12 @@ public class home {
         model.addAttribute("categories", categoryService.getAllCategories());
         return "Home";
     }
+
     @GetMapping(value = "/home1")
     public String Home(Model model) {
         return "Home1";
     }
+
     @GetMapping(value = "/cm")
     public String displayH(Model model) {
         return "cmain";
@@ -37,6 +39,7 @@ public class home {
         model.addAttribute("products",productService.getAllProducts());
         return "display-products-c";
     }
+
     @GetMapping(value = "/display-a-product/{ID}")
     public String UpdateOrders(@PathVariable long ID,Model model)  {
         model.addAttribute("product", productService.getProductById(ID) );

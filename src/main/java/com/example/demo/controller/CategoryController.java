@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-//@PreAuthorize("hasRole('ADMIN')")
+
 @Controller
 public class CategoryController {
     private final CategoryService categoryService;
@@ -14,10 +14,10 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @PreAuthorize("hasRole('ADMIN')")
 
-    @GetMapping("/manage-category")
+
+    @GetMapping("/category/manage")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manageCategory(Model model) {
         model.addAttribute("categories",categoryService.getAllCategories());
         return "categories/manage-category";
@@ -36,7 +36,6 @@ public class CategoryController {
 
     @PostMapping("/update-category")
     @PreAuthorize("hasRole('ADMIN')")
-
     public String updateCategory(@RequestParam("id") Long id, @RequestParam("updatedName") String name,@RequestParam("updatedImage") String img){
         System.out.println(id + " "+name +" "+img);
         Category category = categoryService.getCategoryById(id);
@@ -49,7 +48,6 @@ public class CategoryController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/manage-category";

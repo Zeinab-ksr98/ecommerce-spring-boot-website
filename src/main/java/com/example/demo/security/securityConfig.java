@@ -18,75 +18,31 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class securityConfig  {
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/users/**","/SignIn").permitAll();
-//                    auth.requestMatchers("/cart/**").authenticated();
-//                })
-//                .formLogin(Customizer.withDefaults())
-//                .logout(logout -> {
-//                    logout.logoutUrl("/logout");
-//                    logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
-//                })
-//                .build();
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity
-                .csrf(AbstractHttpConfigurer :: disable)
-                //set up the apis that can be a accessed by all (permit all())
-                .authorizeHttpRequests( auth -> auth
-//                                .requestMatchers("/visitor-api", "/save","/home").permitAll()
-//                                .requestMatchers("/**").hasAnyRole("admin","user")
-//                                .requestMatchers("/**").permitAll()
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/home").permitAll();
+                    auth.anyRequest().authenticated();
+                })
+                .formLogin((form) ->{
+                    form.loginPage("/SignIn").loginProcessingUrl("/login").defaultSuccessUrl("/get-all-orders").permitAll();
 
-                        .requestMatchers("/get-orders").authenticated()
-                )
-
-                //login
-                .formLogin(login->{
-                    login.loginPage("/SignIn").loginProcessingUrl("/login").permitAll();
-                    login.defaultSuccessUrl("/get-orders");
-                }
-                )
+                })
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
-                    logout.logoutSuccessUrl("/visitor-api");
+                    logout.logoutSuccessUrl("/home").permitAll();
                     logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
                 })
                 .build();
     }
-//the commented method can be used alone along with passencoder (without userInfodetails ...)
-    //this can only be done manually and saved in the memory(will be rermoved as soon as you rerun and all passwords are shown in the code -->less secure)
-    //to let the security mapp between the user details in the data base and the
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-    //user details is a class found in security the bellow are setting the usename ,password,role manuall
-    //also we are encoding (نشفر) the pass for security
-//        UserDetails ADMIN = User.withUsername("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        UserDetails USER = User.withUsername("user1")
-//                .password(passwordEncoder().encode("user1"))
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(ADMIN,USER);
-//    }
-//so the next method
-// ( userdetails service will overload the one manually writen to connect the user info details to the ones in memmory of security)
-// are ben used to map the data base with the security
+
 
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserInfoDetailsService();
     }
-    //increpting the pass by using
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
