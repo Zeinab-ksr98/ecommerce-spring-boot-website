@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{home.css}">
+</head>
+<body>
+<div style="position: relative; width: 100%; height: 100vh; overflow: hidden;" >
+    <img th:src="@{main.jpg}" alt="pmain" style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+<div class="mouse-cursor-tracking">
+    <div class="container my-1">
+        <div class="row mx-2">
+            <div class="col-3 d-flex justify-content-between" th:each="category : ${categories}">
+                <img th:src="@{'/' + ${category.img}}" class="rounded-circle img-fluid" width="150" alt="cat" style="border-radius: 50%; margin: 5px;">
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container mt-5"  th:each="product : ${products}">
+            <div class="trending-product__cards">
+                <div class="card">
+                    <i class="card__icon bx bxs-heart"></i>
+                    <a class="card__img" th:href="@{/display-a-product/{ID}(ID=${product.id})}">
+                        <img class="img" th:src="'/'+${product.urlimg}" alt="Product Image">
+                    </a>
+                    <div class="card__content">
+                        <div class="content-top">
+                            <span class="card__title"></span>
+                            <span class="card__subtitle"></span>
+                        </div>
+                        <div class="content-bottom">
+                            <span class="card__price"></span>
+                            <div class="button outline card__btn">
+                                <i class="bx bx-cart"></i>
+                                <span>Add to cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

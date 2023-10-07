@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.model.enums.Role;
+import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,19 @@ import java.util.UUID;
 public class UserController {
 
     private final  UserService userService;
-
+    private final ProductService productService;
+    private final CategoryService categoryService;
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, ProductService productService, CategoryService categoryService){
         this.userService = userService;
+        this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping(value = "/create-initial-admin")
     public String createInitialAdmin(){
-        User user = new User("mhmd", "mhmd@cx.com", "123", "81344864", true);
+        System.out.println("hi");
+        User user = new User("zeinabksr", "zk@gmail.com", "123", "03010131", true);
         try{
             User admin = userService.createUser(user,true);
             System.out.println("done");
@@ -37,6 +42,13 @@ public class UserController {
         }catch (Exception e){
             return e.getMessage();
         }
+    }
+    @GetMapping(value = "/home")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public String displayHome(Model model) {
+        model.addAttribute("products",productService.getAllProducts());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "customer/CustomerHome";
     }
 
     @PostMapping(value = "/create")
@@ -50,6 +62,19 @@ public class UserController {
             return "redirect:/home";
         } catch (Exception e) {
             return "account/SignIn";
+        }
+    }
+    @PostMapping(value = "/create-admin")
+    public String createAdmin(@ModelAttribute("newuser") User user){
+        if(userService.userNameExists(user.getUsername()))
+            return "account/CreateAdmin";
+        if(userService.userEmailExists(user.getEmail()))
+            return "account/CreateAdmin";
+        try {
+            userService.createUser(user,true);
+            return "redirect:/home";
+        } catch (Exception e) {
+            return "account/CreateAdmin";
         }
     }
 
@@ -89,5 +114,4 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

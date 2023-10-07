@@ -40,8 +40,6 @@ public class CartController {
         System.out.printf(product);
         List<Product> products = new ArrayList<>();
         products.add(productService.getProductById(Long.parseLong(product)));
-//
-//        cart.setProductList(products);
         cartService.updateCart(cart);
         return null;
     }

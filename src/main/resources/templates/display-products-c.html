@@ -63,17 +63,40 @@
 </head>
 <body>
 <div th:fragment="sr">
+<!--    <div class="container mt-5"  th:each="product : ${products}">-->
+<!--        <div class="pill-container">-->
+<!--            <div class="pill perspective-left">-->
+<!--                    <div class="htcatthumb">-->
+<!--                        <a th:href="@{/display-a-product/{ID}(ID=${product.id})}">-->
+<!--                            <img class="rounded mt-1" width="200" height="200" th:src="'/'+${product.urlimg}" alt="p"/>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <br>-->
+<!--                    <div class="frproductinner innerposition">-->
+<!--                    </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="container mt-5"  th:each="product : ${products}">
-        <div class="pill-container">
-            <div class="pill perspective-left">
-                    <div class="htcatthumb">
-                        <a th:href="@{/display-a-product/{ID}(ID=${product.id})}">
-                            <img class="rounded mt-1" width="200" height="200" th:src="'/'+${product.urlimg}" alt="p"/>
-                        </a>
+        <div class="trending-product__cards">
+            <div class="card">
+                <i class="card__icon bx bxs-heart"></i>
+                <a class="card__img" th:href="@{/display-a-product/{ID}(ID=${product.id})}">
+                    <img class="rounded"  th:src="'/'+${product.urlimg}" alt="Product Image">
+                </a>
+                <div class="card__content">
+                    <div class="content-top">
+                        <span class="card__title"></span>
+                        <span class="card__subtitle"></span>
                     </div>
-                    <br>
-                    <div class="frproductinner innerposition">
+                    <div class="content-bottom">
+                        <span class="card__price"></span>
+                        <div class="button outline card__btn">
+                            <i class="bx bx-cart"></i>
+                            <span>Add to cart</span>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>

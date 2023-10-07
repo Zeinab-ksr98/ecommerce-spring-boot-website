@@ -2,12 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
+import jakarta.annotation.security.PermitAll;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
+@PermitAll
 public class home {
     private final ProductService productService;
     private final CategoryService categoryService;

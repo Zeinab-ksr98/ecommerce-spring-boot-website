@@ -16,7 +16,7 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/category/manage")
+    @GetMapping("/manage-category")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String manageCategory(Model model) {
         model.addAttribute("categories",categoryService.getAllCategories());
@@ -26,7 +26,6 @@ public class CategoryController {
     @PostMapping("/add-category")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String addCategory(@RequestParam("categoryname") String categoryName,@RequestParam("img") String img) {
-        // Create a new category and save it
         Category category = new Category();
         category.setName(categoryName);
         category.setImg(img);
@@ -35,7 +34,7 @@ public class CategoryController {
     }
 
     @PostMapping("/update-category")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String updateCategory(@RequestParam("id") Long id, @RequestParam("updatedName") String name,@RequestParam("updatedImage") String img){
         System.out.println(id + " "+name +" "+img);
         Category category = categoryService.getCategoryById(id);
@@ -45,9 +44,8 @@ public class CategoryController {
         return "redirect:/manage-category";
     }
 
-
     @GetMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/manage-category";

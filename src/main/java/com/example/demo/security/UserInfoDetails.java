@@ -17,10 +17,10 @@ import java.util.UUID;
 //we still need the userDetails (so we implement it ) to have the rest methods that we donot wont to change them
 @Getter
 public class UserInfoDetails implements UserDetails {
+    private  User user;
     private UUID id;
     private String username;
     private String password;
-    @Getter
     private String email;
     private List<Role> roles;
     private boolean enabled;
@@ -32,6 +32,7 @@ public class UserInfoDetails implements UserDetails {
         this.password = user.getPassword();
         this.enabled = user.isEnabled();
         this.roles = user.getRoles();
+        this.user = user;
     }
     //the rest methods that are implemented from user details
     @Override

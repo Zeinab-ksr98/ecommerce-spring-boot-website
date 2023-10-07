@@ -3,118 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <title>Management System</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}" />
 
     <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
     <script th:src="@{/webjars/bootstrap/5.3.1/js/bootstrap.bundle.min.js}"></script>
     <style>
-    .category {
-            overflow: hidden;
-            position: relative;
-        }
-        .category:hover .frproductinner.innerposition {
-            bottom: 0;
-            opacity: 1;
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
 
-        .frproductinner.innerposition {
-                background: #fff none repeat scroll 0 0;
-                bottom: -20px;
-                left: 0;
-                opacity: 0;
-                padding: 30px 20px;
-                position: absolute;
-                text-align: left;
-                transition: all 0.5s ease 0s;
-                width: 100%;
+        .container {
+            background-color: transparent;
+            padding: 20px;
         }
-        .frproductinner  {
-            transition: all 0.3s ease 0s;
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
+
+        .product-image {
+            max-width: 200px;
+            margin-right: 20px;
+        }
+
+        .image-replace-btn {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #007bff;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .centered-form {
+            max-width: 70%;
+            margin: 0 auto;
+        }
+
         .pill-checkbox-container {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
 
+        .category {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category:hover .frproductinner.innerposition {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        .frproductinner.innerposition {
+            background: #fff none repeat scroll 0 0;
+            bottom: -20px;
+            left: 0;
+            opacity: 0;
+            padding: 30px 20px;
+            position: absolute;
+            text-align: left;
+            transition: all 0.5s ease 0s;
+            width: 100%;
+        }
+
+        .frproductinner {
+            transition: all 0.3s ease 0s;
+        }
+
         .pill-checkbox {
             display: inline-block;
             padding: 5px 10px;
-            background-color: white;
+            background-color: #ffffff;
             border-radius: 20px;
             cursor: pointer;
         }
 
-
-        .centered-form {
-            max-width: 70%; /* Adjust the width as needed */
-            margin: 0 auto; /* This centers the form horizontally */
+        .form-group label {
+            color: #333;
         }
 
+        .form-control {
+            border: 1px solid #ccc;
+        }
+
+        .text-danger {
+            color: #f00;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">
-        <img width="40" height="40" src="https://img.icons8.com/nolan/64/product.png" alt="product"/>
-        update Product Details
+<div class="container mt-1">
+    <h2>
+        <img width="40" height="40" src="https://img.icons8.com/nolan/64/product.png" alt="product" />
+        Product Details
     </h2>
-    <form th:action="@{/update-product}" th:object="${product}" method="post" class="centered-form">
-        <input type="hidden" class="form-control" id="id" th:field="*{id}" required th:value="${product.id}">
-        <div class="pill-checkbox-container">
-                <div class="category">
-                    <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" th:value="*{name}">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                    <label for="category">Category:</label>
-                    <select id="category" name="category" th:each="cat : ${categories}">
-                        <option th:value="*{category}" th:text="${cat.name}"></option>
-                    </select>
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                    <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" th:value="*{price}">
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                    <label for="discount">Discount:</label>
-                    <input type="number" id="discount" name="discount" th:value="*{discount}">
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" th:value="*{description}"></textarea>
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                    <label for="urlimg">Image URL:</label>
-                    <img th:src="'./'+${urlimg}">
-                    <input type="text" id="urlimg" name="urlimg" th:value="*{urlimg}">
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                    <label for="availability">available:</label>
-                    <input type="checkbox" id="availability" name="availability" onchange="updateAvailability(this)"  th:value="${availability}" th:checked="${availability}" >
-                    </div>
-                    <br>
-
-                </div>
-            </label>
+    <div class="product-card">
+        <div class="product-image">
+            <img th:src="'/'+${product.urlimg}" alt="Product Image">
         </div>
+        <div>
 
-        <br/>
-        <button id="createButton" type="submit" class="btn btn-primary">modify Product</button>
-    </form>
+            <form th:action="@{/update-product}" th:object="${product}" method="post" class="centered-form">
+                <p class="image-replace-btn" data-bs-toggle="modal" data-bs-target="#imageModal">Replace Image</p>
+                <input type="hidden" class="form-control" id="imageUrl" name="imageUrl" th:field="*{urlimg}" th:value="${product.urlimg}">
+                <input type="hidden" class="form-control" id="id" th:field="*{id}" required th:value="${product.id}">
+                <input type="hidden" class="form-control" id="seller" th:field="*{seller}" required th:value="${product.seller}">
+
+                <div class="pill-checkbox-container">
+                    <div class="category">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" th:value="*{name}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select id="category" name="category" class="form-control" th:field="*{category}" required>
+                                <option value="">Select Category</option>
+                                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                            </select>
+                            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" id="price" name="price" th:value="*{price}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">Discount:</label>
+                            <input type="number" id="discount" name="discount" th:value="*{discount}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" th:value="*{description}" th:field="*{description}" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="availability">Available:</label>
+                            <input type="checkbox" id="availability" name="availability" onchange="updateAvailability(this)"
+                                   th:value="${availability}" th:checked="${availability}">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <button id="createButton" type="submit" class="btn btn-primary">Modify Product</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- Image Replacement Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog rounded">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Replace Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newImage">New Image Path:</label>
+                    <input type="text" id="newImage" name="newImage" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveNewImage()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <br/>
 <div th:replace="fragments/footer :: footer"></div>
 <script>
@@ -126,6 +202,22 @@
             availabilityInput.value = "false";
         }
     }
+
+    function saveNewImage() {
+        var newImagePath = document.getElementById("newImage").value;
+        var imageUrlField = document.getElementById("urlimg"); // Update to match your input field's ID
+
+        // Update the `urlimg` input field in the main form
+        if (imageUrlField) {
+            imageUrlField.value = newImagePath;
+        }
+
+        // Close the modal
+        var modal = new bootstrap.Modal(document.getElementById("imageModal"));
+        modal.hide();
+    }
+
+
 </script>
 
 </body>

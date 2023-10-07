@@ -5,3 +5,5 @@ when managing it from the admin side an infinit loop is created in the responce 
 and the same is applied in the case of cart and user where on check out the cart will be transfered into order in the customer name
 
 dtos are mainly used to change the
+
+a product have a record called deleted that is set as true when we delete the product couse it cannot be deleted from db cause it's dependent record

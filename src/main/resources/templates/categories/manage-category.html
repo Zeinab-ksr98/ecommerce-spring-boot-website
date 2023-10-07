@@ -13,31 +13,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg " style="background-color: #444B54">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/logo1.png}" width="auto" height="40" class="d-inline-block align-top" alt="" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--            <ul class="navbar-nav mr-auto"></ul>-->
-<!--            <ul class="navbar-nav">-->
-<!--                <li class="nav-item active">-->
-<!--                    <a class="nav-link" th:href="@{/admin}">Home Page</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item active">-->
-<!--                    <a class="nav-link" th:href="@{/logout}">Logout</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-    </div>
-</nav><br>
+<div th:replace="fragments/header :: header"></div>
 <div class="container">
     <button type="button" style="margin: 20px 0" class="btn btn-primary"
             data-toggle="modal" data-target="#exampleModalCenter">Add Category</button>
@@ -56,9 +32,9 @@
                     </div>
                     <div class="modal-body text-center">
                         <input type="text" name="categoryname" class="form-control"
-                               id="name" th:value="${name}" required="required" placeholder="Category name">
+                               id="name" th:value="${name}" required placeholder="Category name">
                         <input type="text" name="img" class="form-control"
-                               id="imageurl" th:value="${img}" placeholder="Image URL">
+                               id="imageurl" th:value="${img}" placeholder="Image URL" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
@@ -99,7 +75,7 @@
             </td>
         </tbody>
     </table>
-
+<!--    update modal-->
     <div th:each="category : ${categories}" th:id="'updateModal'+${category.id}" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

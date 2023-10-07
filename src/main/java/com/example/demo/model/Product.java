@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @NotNull(message = "Category is required")
     private Category category;
 
     private double price;
@@ -29,6 +31,21 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User seller;
+
+    public boolean isitavailability() {
+        return availability;
+    }
+    public boolean isDeleted() {
+        return Deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        Deleted = deleted;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
 
 
 }

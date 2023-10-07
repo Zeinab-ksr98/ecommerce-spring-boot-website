@@ -84,12 +84,13 @@
 <!--    </nav>-->
 
 <!--</header>-->
-<header th:fragment="header" class=" text-emphasis-primary">
 
-    <nav class="navbar navbar-expand-lg " style="background:linear-gradient(to left, #6a6f8c,#6a6f8c, lightblue);">
+<header th:fragment="header" class=" text-emphasis-primary"  >
+
+    <nav  class="navbar navbar-expand-lg " style="background-color: #444B54">
         <div class="container-fluid">
             <div class="navbar-brand text-light" >
-                <img width="50" height="50" th:src="@{./logo1.png}" alt="online-store"/>
+                <img width="auto" height="40" th:src="@{./logo1.png}" alt="online-store"/>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,16 +100,16 @@
 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-light" th:href="@{/admin}"><h5>Home</h5></a>
+                        <a class="nav-link text-light" th:href="@{/admin}"><h6>Home</h6></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" th:href="@{/get-all-orders}"><h5>Orders</h5></a>
+                        <a class="nav-link text-light" th:href="@{/get-all-orders}"><h6>Orders</h6></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" th:href="@{/manage-products}"><h5>Products</h5></a>
+                        <a class="nav-link text-light" th:href="@{/manage-products}"><h6>Products</h6></a>
 
                     <li class="nav-item">
-                        <a class="nav-link text-light" th:href="@{/manage-category}"><h5>Categories</h5></a>
+                        <a class="nav-link text-light" th:href="@{/manage-category}"><h6>Categories</h6></a>
                     </li>
 
                 </ul>
@@ -123,8 +124,8 @@
             </div>
         </div>
     </nav>
-
 </header>
+
 
 
 

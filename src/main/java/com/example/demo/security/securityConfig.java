@@ -23,7 +23,7 @@ public class securityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/home").permitAll();
+                    auth.requestMatchers("/home","/users/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .formLogin((form) ->{

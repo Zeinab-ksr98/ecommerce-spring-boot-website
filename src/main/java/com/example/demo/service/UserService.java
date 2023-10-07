@@ -126,12 +126,6 @@ public class UserService {
         cartService.createWish(newUser.getCart());
         return userRepository.save(newUser);
     }
-    public User createAdmin(User user){
-        User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(),true );
-        wishService.createWish(newUser.getWish());
-        cartService.createWish(newUser.getCart());
-        return userRepository.save(newUser);
-    }
 
     public User updateUser(UUID id, String userName, String password){
         Optional<User> user = userRepository.findById(id);

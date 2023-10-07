@@ -7,6 +7,43 @@
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .form-group label {
+            color: #333;
+        }
+
+        .form-control {
+            border: 1px solid #ccc;
+        }
+
+        .text-danger {
+            color: #f00;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -19,10 +56,13 @@
         </div>
         <div class="form-group">
             <label for="category">Category:</label>
-            <select id="category" name="category" th:each="cat : ${categories}">
-                <option th:value="${cat.name}" th:text="${cat.name}"></option>
+            <select id="category" name="category" class="form-control" th:field="*{category}" required>
+                <option value="">Select Category</option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
             </select>
+            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label for="pprice">Price:</label>
             <input type="number" class="form-control" id="pprice" name="pprice" th:field="*{price}" required>

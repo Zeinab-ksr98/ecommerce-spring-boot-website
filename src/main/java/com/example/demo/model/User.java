@@ -52,7 +52,6 @@ public class User {
     @OneToMany
     private List<Address> addresses;
 
-
     private String phone;
 
     public boolean deleted;
@@ -64,7 +63,7 @@ public class User {
         this.password = password;
         this.phone=phone;
         if (isAdmin) {
-            this.roles = List.of(Role.ADMIN);
+            this.roles = List.of(Role.ADMIN,Role.USER);
         } else {
             this.roles = List.of(Role.USER);
         }
