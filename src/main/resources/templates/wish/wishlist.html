@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wish List</title>
+</head>
+<body>
+<h1>My Wish List</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="product, i : ${wish.productList}">
+        <tr>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td>
+                <input type="number" min="1" th:field="*{productList[__${i.index}__].quantity}" />
+            </td>
+            <td>
+                <form th:action="@{/remove-product/{pID}}" th:method="get" th:object="${product.id}">
+                    <input type="hidden" th:field="*{productList[__${i.index}__].id}" />
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<a th:href="@{/display-wishList}">Back to Wish List</a>
+</body>
+</html>

@@ -17,22 +17,23 @@ public class WishService {
         this.wishRepository = wishRepository;
     }
 
-    public List<Wish> getAllWishs(){
-        return wishRepository.findAll();
+    public Wish createWish(Wish wish){
+        return wishRepository.save(wish);
     }
 
     public Wish getWishById(Long id){
         return wishRepository.findById(id).orElse(null);
     }
-
-    public Wish createWish(Wish wish){
-        return wishRepository.save(wish);
-    }
-
     public Wish updateWish(Wish wish){
         return wishRepository.save(wish);
     }
-
+    public void deleteFromWish(long cid ,Long pid){
+        wishRepository.deleteProductFromWish(cid,pid);
+    }
+    //no need for it now
+    public List<Wish> getAllWishs(){
+        return wishRepository.findAll();
+    }
     public void deleteWish(Long id){
         wishRepository.deleteById(id );
     }

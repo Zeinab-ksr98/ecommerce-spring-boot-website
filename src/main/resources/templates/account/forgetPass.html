@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="forgetPasswordForm" >
+    <form name="f" th:action="@{/forget_pass}"  method="post">
+        <div class="login-form">
+            <div th:if="${param.error}" class="alert alert-error">
+                Invalid username or email.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out.
+            </div>
+            <div class="group ">
+                <label for="reemail" >Email</label>
+                <input type="text"  id="reemail" name="reemail"/>
+            </div>
+            <div class="group ">
+                <label for="reusername">Username</label>
+                <input type="text" id="reusername" name="reusername"/>
+            </div>
+            <div class="group ">
+                <label for="resetpassword">New Password</label>
+                <input type="password" id="resetpassword" name="resetpassword"/>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn">Reset Password</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

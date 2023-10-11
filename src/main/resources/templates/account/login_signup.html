@@ -15,7 +15,6 @@
         body{
             margin:0;
             color:  #6a6f8c;
-            background:lightblue;
             font:600 16px/18px 'Open Sans',sans-serif;
         }
 
@@ -172,7 +171,7 @@
                     <div class="login-snip">
                             <input id="tab-1" type="radio" name="tab" class="sign-in" >
                             <label for="tab-1" class="tab">Login</label>
-                            <input id="tab-2" type="radio" name="tab" class="sign-up" checked>
+                            <input id="tab-2" type="radio" name="tab" class="sign-up" checked >
                             <label for="tab-2" class="tab">Sign Up</label>
                             <div class="login-space">
                                 <div class="login">
@@ -197,6 +196,38 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <div>
+                                       <a th:href="@{/forgetPage}" id="forgetPasswordLink">
+                                           Forget password?
+                                       </a>
+<!--                                        <div id="forgetPasswordForm" style="display: none;">-->
+<!--                                            <form name="f" th:action="@{/forget_pass}"  method="post">-->
+<!--                                                <div class="login-form">-->
+<!--                                                    <div th:if="${param.error}" class="alert alert-error">-->
+<!--                                                        Invalid username or email.-->
+<!--                                                    </div>-->
+<!--                                                    <div th:if="${param.logout}" class="alert alert-success">-->
+<!--                                                        You have been logged out.-->
+<!--                                                    </div>-->
+<!--                                                    <div class="group ">-->
+<!--                                                        <label for="reemail" >Email</label>-->
+<!--                                                        <input type="text"  id="reemail" name="reemail"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="group ">-->
+<!--                                                        <label for="reusername">Username</label>-->
+<!--                                                        <input type="text" id="reusername" name="re-username"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="group ">-->
+<!--                                                        <label for="resetpassword">New Password</label>-->
+<!--                                                        <input type="password" id="resetpassword" name="resetpassword"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-actions">-->
+<!--                                                        <button type="submit" class="btn">Reset Password</button>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
+                                        </div>
+                                    </div>
                                 </div>
                         <form action="/users/create" th:object="${newuser}" method="POST">
                             <div class="sign-up-form">
@@ -234,4 +265,9 @@
         </div>
 
     </body>
+<!--    <script>-->
+<!--        document.getElementById("forgetPasswordLink").addEventListener("click", function() {-->
+<!--            document.getElementById("forgetPasswordForm").style.display = "block";-->
+<!--        });-->
+<!--    </script>-->
 </html>

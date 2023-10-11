@@ -9,6 +9,8 @@ import com.example.demo.model.enums.Role;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.UserInfoDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -103,7 +105,12 @@ public class UserService {
     public Optional<User> findUserByUserName(String username){
         return userRepository.findUserByUserName(username);
     }
-
+    public Optional<User> findUserByEmailAndUserName(String username,String email){
+        return userRepository.findUserByEmailAndName(email,username);
+    }
+    public User save(User user){
+        return userRepository.save(user);
+    }
     public Boolean userNameExists(String username){ return userRepository.existsByUsername(username);}
 
     public Optional<User> findUserByEmail(String email){
@@ -127,35 +134,22 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User updateUser(UUID id, String userName, String password){
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            user.get().setUsername(userName);
-            if(!password.isEmpty())
-                user.get().setPassword(passwordEncoder.encode(password));
-            return userRepository.save(user.get());
-        }
-        return null;
-    }
-
-    public User updateUserByAdmin(UUID id, String userName, String password, String email, List<Role> roles, String address, boolean enable){
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            user.get().setUsername(userName);
-            user.get().setPassword(passwordEncoder.encode(password));
-            user.get().setEmail(email);
-            user.get().setRoles(roles);
-            return userRepository.save(user.get());
-        }
-        return null;
-    }
-
     public User deActivateUser(UUID id){
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(value -> value.setEnabled(false));
         return user.orElse(null);
     }
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        if (authentication != null && authentication.getPrincipal() instanceof UserInfoDetails) {
+            // Assuming you have a custom UserDetails implementation called UserPrincipal
+            UserInfoDetails userInfoDetails = (UserInfoDetails) authentication.getPrincipal();
+            return userInfoDetails.getUser();
+        }
+
+        return null;
+    }
     public User activate(UUID id){
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(value -> value.setEnabled(true));

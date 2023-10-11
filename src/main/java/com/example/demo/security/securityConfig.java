@@ -17,13 +17,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class securityConfig  {
+public class securityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/home","/users/**").permitAll();
+                    auth.requestMatchers("/home","/users/**","/forget_pass","/forgetPage").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .formLogin((form) ->{
@@ -55,4 +55,6 @@ public class securityConfig  {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
+
+
 }

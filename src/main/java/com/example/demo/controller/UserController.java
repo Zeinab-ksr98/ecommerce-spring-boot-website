@@ -43,6 +43,16 @@ public class UserController {
             return e.getMessage();
         }
     }
+    @GetMapping(value = "/create-initial-user")
+    public String createInitialUser(){
+        User user = new User("czk", "czk@gmail.com", "123", "03010135", false);
+        try{
+            User admin = userService.createUser(user,false);
+            return "User Successfully Created";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
     @GetMapping(value = "/home")
     @PreAuthorize("hasAnyAuthority('USER')")
     public String displayHome(Model model) {
@@ -72,7 +82,7 @@ public class UserController {
             return "account/CreateAdmin";
         try {
             userService.createUser(user,true);
-            return "redirect:/home";
+            return "redirect:/profile";
         } catch (Exception e) {
             return "account/CreateAdmin";
         }
