@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -16,21 +17,20 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    public List<Product> getAllProductsForSeller(UUID sellerId){
+        return productRepository.findAllProductsForSeller(sellerId);
+    }
 
-    //for the admin
     public List<Product> getAllProducts(){
         return productRepository.findAllProducts();
     }
-    public List<Product> sortAllProducts() {
-        return productRepository.SortAllProductsByAvailability();
+    public List<Product> SortAllProductsForSeller(UUID sellerId) {
+
+        return productRepository.SortAllProductsForSeller(sellerId);
     }
     //for customer
-    public List<Product> getAllAvailableProducts() {
-        return productRepository.findAllAvailableProducts();
-    }
-
-    public List<Product> FilterAllAvailableProductsByCategory(Long categoryId) {
-        return productRepository.FilterAllAvailableProductsByCategory(categoryId);
+    public List<Product> FilterAllProductsByCategory(Long categoryId) {
+        return productRepository.FilterAllProductsByCategory(categoryId);
     }
 
 

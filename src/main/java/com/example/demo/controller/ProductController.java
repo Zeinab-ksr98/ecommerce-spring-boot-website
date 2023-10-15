@@ -6,6 +6,7 @@ import com.example.demo.model.User;
 import com.example.demo.security.UserInfoDetails;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,68 +17,44 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 
 public class ProductController {
-    private final ProductService productService;
-    private final CategoryService categoryservice;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private CategoryService categoryservice;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryservice) {
-        this.productService = productService;
-        this.categoryservice = categoryservice;
-    }
-    // Get all available products user side
-    @GetMapping(value = "/get-all-products")
-    @PreAuthorize("hasAnyAuthority('USER')")
-    public String getProducts(Model model) {
-        model.addAttribute("products", productService.getAllAvailableProducts());
-        return "product/display-products-c";
-    }
+    private UserService userService;
+
+    // display product's details
     @GetMapping(value = "/display-a-product/{ID}")
     @PreAuthorize("hasAnyAuthority('USER')")
     public String displayProductDetails(@PathVariable long ID, Model model)  {
         model.addAttribute("product", productService.getProductById(ID) );
         return "product/display-a-product";
     }
-
     //Get all Products admin side
     @GetMapping(value = "/manage-products")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public String manageProducts(Model model,Authentication authentication) {
-        model.addAttribute("products",productService.getAllProducts());
+    public String manageProducts(Model model) {
+        model.addAttribute("userrole",userService.getCurrentUser().getRoles().toString());
+        UUID sellerId=userService.getCurrentUser().getId();
+        model.addAttribute("products",productService.getAllProductsForSeller(sellerId));
         return "product/manage-products";
     }
-    //display products acc to category for the user
-    @GetMapping(value = "/cat-all-products")
-    @PreAuthorize("hasAnyAuthority('USER')")
-    public String displayAllProducts(Model model) {
-        model.addAttribute("products", productService.getAllAvailableProducts());
-        return "product/display-products-c";
-    }
-//    @GetMapping(value = "/Filter-all-products/{categoryId}")
-//    @PreAuthorize("hasAnyAuthority('USER')")
-//    public String categoriesProducts(@PathVariable long categoryId, Model model) {
-//        List<Product> filteredProducts = productService.FilterAllAvailableProductsByCategory(categoryId);
-//        model.addAttribute("products", filteredProducts);
-//        return "product/display-products-c";
-//    }
-    @RequestMapping("/Filter-all-products/{categoryId}")
-    @ResponseBody
-    public List<Product> filterAllProductsByCategory(@PathVariable Long categoryId) {
-        if ("all".equals(categoryId)) {
-            return productService.getAllAvailableProducts();
-        } else {
-            return productService.FilterAllAvailableProductsByCategory(categoryId);
-        }
-    }
+
     // sort displayed products for admin
     @GetMapping(value = "/manage-products-Filtered")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String manageProductsSorted(Model model) {
-        model.addAttribute("products",productService.sortAllProducts());
-        return "manage-products";
+        model.addAttribute("userrole",userService.getCurrentUser().getRoles().toString());
+        UUID sellerId=userService.getCurrentUser().getId();
+        model.addAttribute("products",productService.SortAllProductsForSeller(sellerId));
+        return "product/manage-products";
     }
     // Adding a product
     @GetMapping(value="/add-product-form")
@@ -135,6 +112,13 @@ public class ProductController {
         productService.deleteProduct(ID);
         return "redirect:/manage-products";
     }
-
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        if (keyword != null) {
+            List<Product> products = productService.searchProducts(keyword);
+            model.addAttribute("products", products);
+        }
+        return "product/search-result";
+    }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class wishController {
@@ -38,23 +39,32 @@ public class wishController {
             return "wish/wishlist";
     }
 
-    @GetMapping(value="/modify-wish/{pID}")
-    public String modifyWish(@PathVariable long pID,Model model,Authentication authentication) {
+    @GetMapping(value="/add-wish/{pID}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public String modifyWish(@PathVariable long pID) {
 
-            Wish w=userService.getCurrentUser().getWish();
-             Product p= productService.getProductById(pID);
-             List<Product>pl=w.getProductList();
-             pl.add(p);
-            w.setProductList(pl);
-            wishService.updateWish(w);
-          return null ;
+            UUID userid=userService.getCurrentUser().getId();
+            User user=userService.getUserById(userid);
+            Product p=productService.getProductById(pID);
+            if(!user.getWish().getProductList().contains(p)){
+                    user.getWish().getProductList().add(p);
+                    user.getWish().setProductList(user.getWish().getProductList());
+                    userService.save(user);
+            }
+            return "redirect:/home" ;
     }
 
-    @GetMapping(value = "/remove-product/{pID}")
-    public String remove_wishedProduct(@PathVariable long pID) {
-
-        return "wish/wishlist";
+    @GetMapping(value = "/delete-wish/{pID}")
+    public String delete_wishedProduct(@PathVariable long pID) {
+        UUID userid=userService.getCurrentUser().getId();
+        User user=userService.getUserById(userid);
+        Product p=productService.getProductById(pID);
+        user.getWish().getProductList().remove(p);
+        user.getWish().setProductList(user.getWish().getProductList());
+        userService.save(user);
+        return "redirect:/display-wishList";
     }
+
 
 
 }

@@ -23,16 +23,16 @@ public class securityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/home","/users/**","/forget_pass","/forgetPage").permitAll();
+                    auth.requestMatchers("/users/**","/forget_pass","/forgetPage","/Main").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .formLogin((form) ->{
-                    form.loginPage("/SignIn").loginProcessingUrl("/login").defaultSuccessUrl("/get-all-orders").permitAll();
+                    form.loginPage("/SignIn").loginProcessingUrl("/login").defaultSuccessUrl("/home").permitAll();
 
                 })
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
-                    logout.logoutSuccessUrl("/home").permitAll();
+                    logout.logoutSuccessUrl("/Main").permitAll();
                     logout.deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true);
                 })
                 .build();

@@ -4,59 +4,242 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
 
+    /* Modal styles */
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .modal-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        max-width: 100%;
+        padding: 20px;
+        animation: fadein 1s;
+        position: relative;
+    }
+
+    .card-title {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .payment-icons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        margin-right: 10px;
+    }
+
+
+    .payment-icon:hover {
+        border:2px solid lightblue;
+    }
+    .payment-icon.selected {
+        border: 2px solid lightblue;
+    }
+    .payment-icon:not(.selected) {
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    #paymentButton {
+        background-color: lightgray;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: not-allowed;
+        transition: background-color 0.3s, cursor 0.3s;
+    }
+
+    #paymentButton.enabled {
+        background-color: lightblue;
+        cursor: pointer;
+    }
+
+    @keyframes fadein {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .modal-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .custom-shape {
+        border-radius: 10px; /* Rounded corners */
+        padding: 20px;
+        text-align: center;
+    }
+
+</style>
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}" src="../static/images/logo.png"
-                 width="auto" height="40" class="d-inline-block align-top" alt="" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="/adminhome">Home Page</a></li>
-                <li class="nav-item active"><a class="nav-link" href="/logout">Logout</a></li>
-            </ul>
+
+<div class="container-fluid mt-1">
+    <a th:href="@{/home}" style="text-decoration: none"><h4><img width="20" height="20" src="https://img.icons8.com/deco/48/back.png" alt="back"/><span>back</span></h4></a>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>Total Cost: <span th:text="${cart.totalPrice}"></span></h4>
+        <button type="button" onclick="openModal()" class="btn btn-primary" th:if="${cart.totalPrice == 0.0}" disabled>Checkout</button>
+        <button type="button" onclick="openModal()" class="btn btn-primary" th:unless="${cart.totalPrice == 0.0}">checkout</button>
+        <div class="modal-overlay" id="paymentModal" style="display: none;">
+            <div class="modal-container">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2 class="card-title">Pay With</h2>
+                <div class="payment-icons">
+                    <input type="radio" style="display: none" name="paymentMethod" id="creditCard" onclick="enablePaymentButton()" checked >
+                    <label for="creditCard" class="payment-icon " >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="76" id="payment"><g fill="none" fill-rule="evenodd"><path fill="#F4F4F4" d="M111.999 0H8C3.582 0 0 3.59 0 8.008v59.984C0 72.415 3.591 76 8.001 76H112c4.419 0 8.001-3.59 8.001-8.008V8.008C120 3.585 116.409 0 111.999 0Z"></path><path fill="#E87E04" d="M76.792 61.554c-4.557 3.347-11.162 5.132-16.85 5.132-7.974 0-15.153-2.938-20.584-7.826-.427-.384-.044-.908.468-.609 5.861 3.398 13.108 5.442 20.594 5.442 5.05 0 10.603-1.04 15.71-3.2.771-.327 1.417.503.662 1.06"></path><path fill="#E87E04" d="M78.687 59.394c-.58-.741-3.85-.35-5.319-.177-.447.055-.515-.333-.112-.612 2.604-1.826 6.878-1.3 7.377-.687.498.616-.13 4.884-2.578 6.921-.375.313-.734.147-.566-.268.55-1.368 1.782-4.432 1.198-5.177"></path><path fill="#221F1F" d="M64.55 34.491c0 3.216.082 5.897-1.55 8.753-1.316 2.322-3.402 3.75-5.732 3.75-3.18 0-5.033-2.415-5.033-5.979 0-7.034 6.326-8.311 12.315-8.311v1.787m8.354 20.118c-.548.487-1.34.522-1.957.197-2.75-2.275-3.24-3.332-4.754-5.502-4.544 4.62-7.76 6.001-13.655 6.001-6.968 0-12.397-4.283-12.397-12.862 0-6.698 3.647-11.26 8.831-13.489 4.498-1.973 10.778-2.322 15.578-2.867v-1.068c0-1.962.152-4.284-1.002-5.978-1.014-1.521-2.948-2.148-4.649-2.148-3.157 0-5.977 1.614-6.664 4.957-.14.743-.688 1.474-1.433 1.509l-8.04-.86c-.675-.15-1.421-.696-1.235-1.729 1.853-9.704 10.65-12.63 18.526-12.63 4.031 0 9.297 1.068 12.478 4.11 4.032 3.75 3.647 8.752 3.647 14.197v12.862c0 3.865 1.608 5.56 3.123 7.65.536.743.652 1.637-.024 2.194-1.69 1.404-4.695 4.016-6.35 5.479l-.023-.023"></path></g></svg>
+                    </label>
+
+                    <input type="radio" name="paymentMethod" style="display: none" id="paypal" onclick="enablePaymentButton()">
+                    <label for="paypal" class="payment-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="76" id="payment"><g fill="none" fill-rule="evenodd"><path fill="#F4F4F4" d="M111.999 0H8C3.582 0 0 3.59 0 8.008v59.984C0 72.415 3.591 76 8.001 76H112c4.419 0 8.001-3.59 8.001-8.008V8.008C120 3.585 116.409 0 111.999 0Z"></path><path fill="#2C97DE" d="M112.822 24.104h-3.151l-.005.001h-.002c-.721 0-1.453.538-1.658 1.222-.008.028-.022.054-.029.083l-.205.911-4.329 19.107c-.1.431-.167.713-.187.786l.009.01c-.15.668.262 1.22.939 1.283l.009.012h3.27c.717 0 1.444-.533 1.655-1.209.01-.032.026-.063.034-.096l4.722-20.805-.007-.002c.16-.712-.31-1.303-1.065-1.303ZM96.659 42.882a9.298 9.298 0 0 1-1.383.694c-.65.255-1.267.389-1.837.389-.876 0-1.548-.12-2.003-.378-.456-.245-.694-.67-.687-1.278 0-.703.167-1.248.511-1.675.348-.411.863-.742 1.503-.99.636-.21 1.418-.382 2.321-.506.803-.099 2.391-.277 2.594-.278.203-.002.338-.11.248.416-.04.23-.499 2.062-.709 2.895-.061.25-.402.614-.558.711 0 0 .156-.097 0 0Zm6.23-12.88c-1.336-.728-3.428-1.095-6.29-1.095-1.416 0-2.838.11-4.265.327-1.048.156-1.156.182-1.807.32-1.339.283-1.545 1.589-1.545 1.589l-.43 1.722c-.244 1.102.4 1.056.687.97.585-.171.902-.342 2.094-.605 1.14-.252 2.345-.44 3.306-.433 1.41 0 2.481.15 3.194.44.713.303 1.066.818 1.066 1.556.002.175.007.34-.058.486-.059.134-.171.265-.508.31-2.012.116-3.456.294-5.195.541-1.715.236-3.217.639-4.471 1.197-1.338.578-2.34 1.351-3.029 2.331-.672.984-1.01 2.176-1.01 3.58 0 1.328.489 2.41 1.436 3.25.96.83 2.206 1.24 3.715 1.24.943-.006 1.681-.072 2.21-.2a11.32 11.32 0 0 0 1.697-.567c.45-.183.937-.448 1.45-.781.515-.334.87-.571 1.327-.862l.017.027-.129.552c0 .006-.008.008-.008.014l.004.01c-.147.665.264 1.218.94 1.283l.008.012h.06l.002.003c.45 0 1.99-.001 2.71-.003h.503c.033 0 .037-.01.05-.018.69-.082 1.352-.63 1.508-1.287L104.7 35.1c.06-.255.106-.549.134-.887.032-.34.07-.622.059-.825.006-1.53-.67-2.66-2.003-3.388Zm-15.487-2.463c-.439-.832-1.101-1.501-1.94-2.023-.859-.52-1.88-.883-3.062-1.094-1.169-.2-2.559-.314-4.142-.318l-7.369.004c-.758.013-1.503.593-1.678 1.307l-4.954 20.993c-.18.714.312 1.308 1.057 1.304l3.536-.006c.75.006 1.513-.584 1.69-1.298l1.196-5.094c.167-.714.93-1.312 1.692-1.302h1.005c4.312 0 7.656-.862 10.05-2.58 2.388-1.726 3.59-3.99 3.59-6.806-.007-1.23-.222-2.265-.67-3.087ZM79.8 34.405c-1.055.747-2.536 1.122-4.442 1.122h-.876c-.758.009-1.248-.588-1.068-1.304l1.056-4.455c.158-.705.927-1.305 1.675-1.299l1.157-.006c1.352.006 2.363.226 3.061.664.686.443 1.02 1.13 1.025 2.045.002 1.395-.528 2.468-1.588 3.233"></path><path fill="#265697" d="M62.61 28.907c-.67 0-1.55.532-1.967 1.175 0 0-4.488 7.538-4.929 8.291-.24.405-.482.148-.522-.003-.033-.183-1.391-8.238-1.391-8.238-.153-.649-.845-1.206-1.71-1.203l-2.798.004c-.674 0-1.095.53-.945 1.17 0 0 2.14 11.878 2.556 14.672.208 1.545-.021 1.819-.021 1.819l-2.774 4.737c-.406.643-.183 1.169.488 1.169l3.243-.003c.671 0 1.561-.523 1.96-1.167l12.477-20.672s1.193-1.766.092-1.75c-.75.01-3.758 0-3.758 0ZM39.189 42.882a9.345 9.345 0 0 1-1.382.693c-.65.254-1.27.39-1.839.39-.873 0-1.547-.122-2.002-.378-.455-.246-.695-.67-.687-1.28 0-.7.168-1.247.512-1.674.347-.412.86-.743 1.5-.99.638-.21 1.423-.381 2.323-.505.803-.099 2.393-.276 2.595-.28.202 0 .337-.11.247.417-.04.229-.498 2.063-.709 2.896-.063.25-.404.614-.558.711 0 0 .154-.097 0 0Zm6.231-12.881c-1.337-.727-3.428-1.094-6.29-1.094-1.416 0-2.838.11-4.266.326-1.05.155-1.155.182-1.806.32-1.34.284-1.546 1.589-1.546 1.589l-.43 1.723c-.243 1.1.402 1.055.688.97.583-.172.902-.342 2.094-.606 1.139-.251 2.345-.439 3.305-.433 1.41 0 2.481.15 3.194.44.713.303 1.064.82 1.064 1.556.005.176.009.342-.055.485-.06.136-.173.266-.51.31-2.01.118-3.453.296-5.194.543-1.716.236-3.217.639-4.472 1.196-1.338.578-2.338 1.353-3.026 2.332-.674.984-1.011 2.176-1.013 3.58 0 1.327.49 2.41 1.437 3.25.96.83 2.206 1.24 3.715 1.24.943-.006 1.68-.073 2.21-.2.524-.13 1.095-.312 1.696-.567.452-.183.937-.45 1.451-.782.513-.333.87-.57 1.33-.861l.013.027-.128.551c-.001.005-.008.009-.008.015l.005.009c-.147.667.262 1.219.94 1.283l.008.013h.059l.001.004 2.71-.004h.504c.034 0 .038-.011.049-.018.692-.085 1.352-.632 1.51-1.287L47.23 35.1c.058-.254.105-.548.131-.885.034-.343.072-.623.062-.825.006-1.531-.67-2.662-2.004-3.39Zm-16.088-2.462c-.439-.832-1.101-1.501-1.94-2.023-.859-.52-1.88-.883-3.062-1.094-1.169-.2-2.559-.314-4.142-.318l-7.369.004c-.758.013-1.503.593-1.678 1.307L6.186 46.408c-.18.714.312 1.308 1.057 1.304l3.536-.006c.75.006 1.514-.584 1.69-1.298l1.196-5.094c.167-.714.93-1.312 1.692-1.302h1.005c4.312 0 7.656-.862 10.05-2.58 2.389-1.726 3.59-3.99 3.59-6.806-.007-1.23-.222-2.265-.67-3.087Zm-7.601 6.866c-1.056.747-2.537 1.122-4.443 1.122h-.876c-.758.009-1.248-.588-1.068-1.304l1.057-4.455c.157-.705.926-1.305 1.674-1.299l1.158-.006c1.351.006 2.362.226 3.06.664.686.443 1.02 1.13 1.025 2.045.003 1.395-.527 2.468-1.587 3.233"></path></g></svg>
+                    </label>
+
+                    <input type="radio" name="paymentMethod" style="display: none" id="bitcoin"  onclick="enablePaymentButton()">
+                    <label for="bitcoin" class="payment-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="76" id="payment"><g fill="none" fill-rule="evenodd"><path fill="#F4F4F4" d="M111.999 0H8C3.582 0 0 3.59 0 8.008v59.984C0 72.415 3.591 76 8.001 76H112c4.419 0 8.001-3.59 8.001-8.008V8.008C120 3.585 116.409 0 111.999 0Z"></path><path fill="#F59D00" d="M29.03 40.68c-1.56 6.333-7.905 10.187-14.169 8.608C8.6 47.71 4.788 41.295 6.351 34.963c1.56-6.334 7.904-10.188 14.166-8.61 6.264 1.58 10.075 7.995 8.514 14.328 0 0 1.561-6.333 0 0Zm-6.187-4.543c.233-1.573-.951-2.418-2.571-2.983l.525-2.13-1.282-.323-.512 2.074a53.169 53.169 0 0 0-1.028-.244l.515-2.089-1.282-.323-.525 2.13a42.52 42.52 0 0 1-.82-.195l.002-.006-1.77-.447-.34 1.385s.951.22.931.235c.52.13.614.478.598.754l-.598 2.427c.035.01.082.023.133.043l-.136-.034-.838 3.4c-.064.16-.225.4-.588.309.012.019-.933-.235-.933-.235l-.637 1.484 1.67.421c.31.079.615.161.914.239l-.53 2.155 1.28.323.526-2.132c.35.096.69.184 1.023.268l-.524 2.122 1.283.323.53-2.15c2.188.418 3.833.25 4.525-1.751.558-1.61-.028-2.54-1.178-3.146.838-.195 1.469-.753 1.637-1.904 0 0-.168 1.151 0 0Zm-2.93 4.155c-.397 1.611-3.08.74-3.949.522l.705-2.855c.87.22 3.658.654 3.243 2.333 0 0 .415-1.68 0 0Zm.396-4.178c-.361 1.465-2.594.72-3.318.538l.639-2.59c.724.183 3.056.524 2.68 2.052 0 0 .376-1.528 0 0Z"></path><path fill="#4D4D4D" d="M39.326 33.149c.948 0 1.767.171 2.456.509.691.34 1.262.8 1.72 1.376.451.58.787 1.258 1.004 2.035a9.39 9.39 0 0 1 .324 2.513c0 1.377-.25 2.678-.753 3.904a10.14 10.14 0 0 1-2.057 3.203 9.672 9.672 0 0 1-3.078 2.152c-1.181.529-2.466.793-3.844.793-.179 0-.492-.005-.935-.014-.443-.01-.952-.056-1.522-.134-.573-.08-1.18-.2-1.82-.36A9.057 9.057 0 0 1 29 48.466l5.12-21.749L38.704 26l-1.833 7.718a7.076 7.076 0 0 1 1.182-.418c.395-.1.819-.151 1.272-.151 0 0-.453 0 0 0ZM35.48 45.956c.69 0 1.341-.172 1.952-.509a5.155 5.155 0 0 0 1.586-1.361 6.89 6.89 0 0 0 1.05-1.93 6.642 6.642 0 0 0 .384-2.246c0-.957-.158-1.704-.473-2.244-.315-.537-.899-.807-1.746-.807-.278 0-.636.053-1.08.149a2.683 2.683 0 0 0-1.2.63l-1.951 8.196c.117.021.222.041.31.06.087.02.183.035.28.045.1.011.216.017.356.017h.532s-.217 0 0 0Zm13.356 3.26h-4.38l3.7-15.736h4.409l-3.729 15.736Zm2.131-17.653a2.698 2.698 0 0 1-1.657-.552c-.496-.367-.741-.93-.741-1.691 0-.418.084-.81.25-1.18.17-.37.39-.688.668-.959.276-.268.597-.482.96-.644a2.907 2.907 0 0 1 1.171-.238c.611 0 1.162.184 1.656.553.492.37.739.934.739 1.69 0 .42-.084.814-.252 1.183a3.115 3.115 0 0 1-1.626 1.6 2.858 2.858 0 0 1-1.168.238Zm4.685-2.002 4.587-.719-1.126 4.638h4.912l-.887 3.65h-4.883l-1.3 5.503c-.12.46-.188.888-.207 1.286-.022.4.028.744.147 1.033.117.29.329.513.636.671.305.161.742.242 1.316.242.472 0 .933-.045 1.378-.136.442-.088.89-.212 1.344-.373l.327 3.412c-.592.22-1.233.408-1.923.567-.692.16-1.51.238-2.457.238-1.36 0-2.415-.204-3.167-.61-.75-.41-1.28-.97-1.598-1.678-.314-.706-.453-1.52-.414-2.437.04-.919.177-1.885.414-2.902l2.9-12.385Zm8.18 13.373c0-1.355.217-2.633.65-3.83a9.443 9.443 0 0 1 1.867-3.143 8.739 8.739 0 0 1 2.945-2.123c1.15-.518 2.44-.778 3.86-.778.889 0 1.682.085 2.381.255a9.573 9.573 0 0 1 1.91.672l-1.51 3.473a14.04 14.04 0 0 0-1.228-.434c-.424-.132-.941-.195-1.553-.195-1.462 0-2.618.509-3.478 1.524-.856 1.017-1.288 2.385-1.288 4.1 0 1.017.217 1.84.653 2.469.433.629 1.234.942 2.396.942.573 0 1.127-.06 1.657-.179a8.1 8.1 0 0 0 1.421-.448l.327 3.56c-.554.216-1.164.412-1.835.584-.671.166-1.47.252-2.397.252-1.224 0-2.26-.18-3.107-.537-.848-.362-1.548-.843-2.1-1.452a5.486 5.486 0 0 1-1.199-2.14 8.871 8.871 0 0 1-.372-2.572s0 .896 0 0Zm18.705 6.7c-1.046 0-1.954-.16-2.724-.48-.768-.318-1.404-.766-1.907-1.346a5.834 5.834 0 0 1-1.14-2.048c-.257-.788-.382-1.66-.382-2.616 0-1.198.19-2.397.575-3.592a10.207 10.207 0 0 1 1.703-3.23 9.12 9.12 0 0 1 2.75-2.351c1.083-.607 2.328-.912 3.727-.912 1.026 0 1.93.161 2.71.48.777.318 1.417.77 1.923 1.346.5.58.881 1.261 1.137 2.05.258.786.385 1.66.385 2.617a12.05 12.05 0 0 1-.56 3.592 10.412 10.412 0 0 1-1.658 3.23 8.711 8.711 0 0 1-2.737 2.347c-1.093.608-2.362.913-3.802.913Zm2.189-12.804c-.65 0-1.224.19-1.715.567-.493.381-.908.86-1.242 1.437a7.14 7.14 0 0 0-.757 1.9 8.275 8.275 0 0 0-.25 1.959c0 .998.16 1.776.473 2.336.317.556.888.836 1.717.836.651 0 1.222-.189 1.717-.57.49-.377.905-.856 1.241-1.435a7.158 7.158 0 0 0 .757-1.9c.166-.686.25-1.341.25-1.959 0-.996-.159-1.775-.475-2.334-.315-.557-.888-.837-1.716-.837Zm10.591 12.386h-4.383l3.699-15.736h4.411l-3.727 15.736Zm2.128-17.653c-.61 0-1.165-.184-1.656-.552-.493-.367-.74-.93-.74-1.691 0-.418.085-.81.252-1.18a3.119 3.119 0 0 1 1.628-1.603 2.887 2.887 0 0 1 1.167-.238 2.7 2.7 0 0 1 1.658.553c.492.37.741.934.741 1.69 0 .42-.088.814-.254 1.183a3.105 3.105 0 0 1-1.624 1.6 2.867 2.867 0 0 1-1.172.238Zm3.254 2.634c.332-.098.703-.216 1.107-.345a16.162 16.162 0 0 1 3.049-.627c.62-.071 1.328-.106 2.114-.106 2.31 0 3.902.68 4.781 2.036.878 1.356 1.03 3.212.46 5.565l-2.014 8.496h-4.409l1.953-8.318c.119-.519.213-1.021.282-1.512.07-.486.065-.914-.016-1.285a1.542 1.542 0 0 0-.546-.899c-.289-.229-.726-.343-1.318-.343-.57 0-1.152.062-1.745.181l-2.87 12.176h-4.41l3.582-15.019Z"></path></g></svg>
+                    </label>
+                </div>
+                <a id="paymentButton" th:href="@{/cartToOrder}" class="enabled" disabled>Make Order</a>
+            </div>
         </div>
     </div>
-</nav>
-<br>
-<div class="container-fluid">
-    <a style="margin: 20px 0" class="btn btn-primary" href="/user/products">Add Product</a><br>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">id</th>
             <th scope="col">Product Name</th>
             <th scope="col">Price</th>
-            <th scope="col">Description</th>
+            <th scope="col">quantity</th>
             <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
         <!-- Use Thymeleaf to loop through your data -->
         <tr th:each="cartItem : ${cartItems}">
-            <td th:text="${cartItem.id}"></td>
-            <td th:text="${cartItem.productName}"></td>
-            <td th:text="${cartItem.price}"></td>
-            <td th:text="${cartItem.description}"></td>
+            <td th:text="${cartItem.product.name}"></td>
+            <td th:text="${cartItem.product.price}"></td>
+            <td th:text="${cartItem.quantity}"></td>
             <td>
-                <form th:action="@{/cart/delete}" method="get">
-                    <input type="hidden" name="id" th:value="${cartItem.id}">
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                </form>
+                <a th:href="@{/delete-cart/{pID}(pID=${cartItem.product.id})}" style="text-decoration: none">x </a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+<div class="modal-overlay " id="errorModal" style="display: none;">
+    <div class="modal-container">
+        <span class="close-button" onclick="closeErrorModal()">&times;</span>
+        <div class="custom-shape">
+            <img width="100" height="100" src="https://img.icons8.com/keek/100/experimental-error-keek.png" alt="experimental-error-keek"/>
+            <h2 class="card-title">Error</h2>
+            <h4 id="errorMessage">Please fill in your details before checking out.</h4>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function openModal() {
+        document.getElementById("paymentModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("paymentModal").style.display = "none";
+    }
+
+    function openErrorModal() {
+        document.getElementById("errorModal").style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeErrorModal() {
+        document.getElementById("errorModal").style.display = "none";
+    }
+
+    // Check if the URL contains the errorModal fragment, and open the modal accordingly
+    if (window.location.hash === "#errorModal") {
+        openErrorModal();
+    }
+    function enablePaymentButton() {
+
+        const paymentButton = document.getElementById("paymentButton");
+        const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+        const paymentIcons = document.querySelectorAll('.payment-icon');
+        paymentMethods.forEach((method, index) => {
+            if (method.checked) {
+                paymentIcons[index].classList.add('selected');
+            } else {
+                paymentIcons[index].classList.remove('selected');
+            }
+        });
+        for (const method of paymentMethods) {
+            if (method.checked) {
+                paymentButton.classList.add("enabled");
+                paymentButton.removeAttribute("disabled");
+            }
+        }
+    }
+</script>
 </body>
 </html>

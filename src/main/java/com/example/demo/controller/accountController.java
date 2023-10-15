@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Address;
+import com.example.demo.model.Category;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.CategoryService;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,51 +13,74 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 
 @Controller
 public class accountController {
     private final ProductService productService;
-    private final UserService userService;
-
     private final CategoryService categoryService;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private AddressService addressService;
 
-    public accountController (ProductService productService, UserService userService, CategoryService categoryService) {
+    public accountController (ProductService productService, CategoryService categoryService) {
         this.productService = productService;
-        this.userService = userService;
         this.categoryService = categoryService;
+    }
+    @GetMapping(value = "/Main")
+    public String home(Model model) {
+        return "Main";
     }
     @GetMapping(value = "/SignIn")
     public String SignIn(Model model) {
         model.addAttribute("newuser",new User());
         return "account/login_signup";
     }
-    @GetMapping(value = "/create-admin")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public String CreateAdmin(Model model) {
-        model.addAttribute("newuser",new User());
-        return "account/createAdmin";
+@GetMapping(value = "/home")
+@PreAuthorize("hasAnyAuthority('USER')")
+public String displayHome(Model model, @RequestParam(name = "catid", required = false) Long catid) {
+    model.addAttribute("userrole", userService.getCurrentUser().getRoles().toString());
+
+    if (catid == null) {
+        model.addAttribute("products", productService.getAllProducts());
+    } else {
+        model.addAttribute("products", productService.FilterAllProductsByCategory(catid));
     }
-    @GetMapping(value = "/home")
-    @PreAuthorize("hasAnyAuthority('USER')")
-    public String displayHome(Model model) {
-        model.addAttribute("products",productService.getAllAvailableProducts());
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "account/Home";
-    }
+
+    model.addAttribute("categories", categoryService.getAllCategories());
+    return "account/Home";
+}
     //profile
 
     @GetMapping("/profile")
     public String userProfile(Model model) {
+        //current user is from cach
         User user =userService.getCurrentUser();
-        model.addAttribute("user", user);
-        model.addAttribute("userrole",userService.getCurrentUser().getRoles());
+        model.addAttribute("orders", orderService.getAllOrdersForCustomer(user.id));
+        model.addAttribute("user", userService.getUserById(user.id));
+        model.addAttribute("userrole",userService.getCurrentUser().getRoles().toString());
+        model.addAttribute("address", new Address());
+
+        System.out.println(userService.getCurrentUser().getRoles());
         return "account/Profile";
     }
 
     @PostMapping("/profile-edit")
     public String editUserProfile(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/profile";
+    }
+    @PostMapping("/address-edit")
+    public String editUseraddress(@ModelAttribute("address") Address address) {
+        User user=userService.getUserById(userService.getCurrentUser().id);
+        List<Address> addresses=user.getAddresses();
+        addresses.add(address);
+        user.setAddresses(addresses);
+        addressService.save(address);
         userService.save(user);
         return "redirect:/profile";
     }
@@ -67,7 +90,7 @@ public class accountController {
     public String resetPassword(@RequestParam String newPassword) {
         User user = userService.getCurrentUser();
         user.setPassword( passwordEncoder.encode(newPassword));
-        userRepository.save(user);
+        userService.save(user);
         return "redirect:/profile";
     }
     @GetMapping("/forgetPage")
@@ -79,7 +102,7 @@ public class accountController {
         User user = userService.findUserByEmailAndUserName(reusername,reemail).orElse(null);
         if(user!=null){
             user.setPassword( passwordEncoder.encode(resetpassword));
-            userRepository.save(user);
+            userService.save(user);
             return "redirect:/SignIn";
         }
         else {
@@ -88,11 +111,21 @@ public class accountController {
         }
 
     }
-//    header
-    @GetMapping("/header")
-    public String Header(Model model) {
-        model.addAttribute("userrole",userService.getCurrentUser().getRoles());
-        return "fragments/header";
+//    manage users as admin
+
+    @GetMapping("/manage-users")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String manageCategory(Model model) {
+        model.addAttribute("userrole",userService.getCurrentUser().getRoles().toString());
+        model.addAttribute("users",userService.getAllUsersNotBlocked());
+        return "account/manage-users";
+    }
+    @PostMapping(value = "/create-admin")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public String CreateAdmin(@RequestParam("username") String userName,@RequestParam("pass") String pass,@RequestParam("email") String email,@RequestParam("phone") String phone) {
+        User user=new User(userName,email,pass,phone,true);
+        userService.createUser(user,true);
+        return "redirect:/manage-users";
     }
 }
 

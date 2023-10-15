@@ -2,83 +2,78 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>product details</title>
     <style>
-<!--    #preload{-->
-<!--     background:#000 url(loader.gif)no-repeat center center;-->
-<!--     background-size:30%-->
-<!--     height:100%;-->
-<!--     width:100%;-->
-<!--     position:fixed;-->
-<!--     z-index:1000;-->
-<!--    transition:all 0.2s;-->
 
-<!--    }-->
-.content {
-    display: none; /* Hide content initially */
-}
+    /* Preloader styles */
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+    .gif {
+        width: 100px; /* Set the dimensions as per your GIF */
+        height: 100px;
+        /* Additional styling if needed */
+    }
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
 
-/* Preloader styles */
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-.gif {
-    width: 100px; /* Set the dimensions as per your GIF */
-    height: 100px;
-    /* Additional styling if needed */
-}
+    .container {
+        background-color: transparent;
+        padding: 20px;
+    }
 
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    .product-details {
+        flex-grow: 2;
+    }
+
+    .product-image {
+        max-width: 100%;
+        margin-right: 25px;
+    }
+
+
+    .product-card .product-image {
+        margin-right: 20px;
+    }
+
+    .card__title:is(:hover, :focus) {
+        cursor: pointer;
+        color: #155FA9;
+    }
+    .card__subtitle {
+        color: hsl(0, 0%, 60%);
+    }
     </style>
 </head>
 <body>
-<!--show the detail of this product-->
-<!--add to card-->
-<!--ammount-->
+<!--loading page-->
+
 <div class="preloader">
     <div class="cart">
-        <img th:src="loader.gif" alt="Loading" class="gif">
+        <img th:src="@{/loading.gif}" alt="Loading.." class="gif">
     </div>
 </div>
-<div class="container content">
-    <a th:href="@{/display-a-product/{ID}(ID=${product.id})}">
-        <img class="rounded mt-1" width="30%" height="30%" th:src="'/'+${product.urlimg}" alt="p"/>
-    </a>
-</div>
-<!--<div class="row">-->
-<!--    <div class="col-sm-3 container">-->
-
-<!--        <button class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#modal" >Modal Normal</button>-->
-
-<!--    </div>-->
-<!--</div>-->
-<!--<div id="modal" class="modal fade" data-backdrop="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <div class="modal-title text-md">This will be your modal title</div>-->
-<!--                <button class="close" data-dismiss="modal">&times;</button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <div class="p-4 text-center">-->
-<!--                    <p>This will be your modal body!</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <script >
 document.addEventListener("DOMContentLoaded", function () {
     // Hide the preloader
@@ -88,72 +83,46 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(function () {
         preloader.style.display = "none";
         content.style.display = "block";
-    }, 1000); // You can adjust the delay as needed
+    }, 900); //  delay
 });
 
 </script>
-<!--<div class="container">-->
+<!--content of the pade-->
+<div class="container mt-1">
 
-<!--    &lt;!&ndash; Portfolio Item Heading &ndash;&gt;-->
-<!--    <h1 class="my-4">Page Heading-->
-<!--        <small>Secondary Text</small>-->
-<!--    </h1>-->
+    <div class="product-card">
+        <div class="product-image">
+            <img th:src="'/'+${product.urlimg}" width="450px" alt="Product Image">
+        </div>
+        <div class="product-details">
+            <div>
+                <h1 class="card__title" th:text="${product.name}"></h1>
+                <span class="card__heart">
+                    <a th:href="@{/add-wish/{pID}(pID=${product.id})}" >
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/155fa9/like--v1.png" alt="like--v1"/>
+                    </a>
+                </span>
+            </div>
 
-<!--    &lt;!&ndash; Portfolio Item Row &ndash;&gt;-->
-<!--    <div class="row">-->
-
-<!--        <div class="col-md-8">-->
-<!--            <img class="img-fluid" src="https://via.placeholder.com/750x500" alt="">-->
-<!--        </div>-->
-
-<!--        <div class="col-md-4">-->
-<!--            <h3 class="my-3">Project Description</h3>-->
-<!--            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>-->
-<!--            <h3 class="my-3">Project Details</h3>-->
-<!--            <ul>-->
-<!--                <li>Lorem Ipsum</li>-->
-<!--                <li>Dolor Sit Amet</li>-->
-<!--                <li>Consectetur</li>-->
-<!--                <li>Adipiscing Elit</li>-->
-<!--            </ul>-->
-<!--        </div>-->
-
-<!--    </div>-->
-<!--    &lt;!&ndash; /.row &ndash;&gt;-->
-
-<!--    &lt;!&ndash; Related Projects Row &ndash;&gt;-->
-<!--    <h3 class="my-4">Related Projects</h3>-->
-
-<!--    <div class="row">-->
-
-<!--        <div class="col-md-3 col-sm-6 mb-4">-->
-<!--            <a href="#">-->
-<!--                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">-->
-<!--            </a>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-3 col-sm-6 mb-4">-->
-<!--            <a href="#">-->
-<!--                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">-->
-<!--            </a>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-3 col-sm-6 mb-4">-->
-<!--            <a href="#">-->
-<!--                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">-->
-<!--            </a>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-3 col-sm-6 mb-4">-->
-<!--            <a href="#">-->
-<!--                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">-->
-<!--            </a>-->
-<!--        </div>-->
-
-<!--    </div>-->
-<!--    &lt;!&ndash; /.row &ndash;&gt;-->
-
-<!--</div>-->
-<!--&lt;!&ndash; /.container &ndash;&gt;-->
+            <h2 class="card__subtitle" th:text="${product.description}"></h2>
+            <h5 class="card-title">
+                <span class="badge badge-primary" th:if="${product.discount != 0}" th:text="${'-' + product.discount + '%'}">Discount</span>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                            <span th:if="${product.discount != 0}" style="text-decoration: line-through;"
+                                  th:text="${'Original$' + product.price}"></span>
+                <span th:text="${'$' + (product.price - (product.price * product.discount / 100))}"></span>
+            </h6>
+            <div style="color:#155FA9 ">
+                <button type="button" class="btn" style="background: transparent; border: 2px solid #155FA9;"
+                        th:if="${product.availability}" th:onclick="'addToCart(' + ${product.id} + ');'">
+                    <b>Add to cart</b>
+                    <img width="20" height="20" src="https://img.icons8.com/pastel-glyph/64/155fa9/shopping-cart--v2.png" alt="shopping-cart--v2"/>
+                </button>
+                <span th:unless="${product.availability}">Product is not available</span>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

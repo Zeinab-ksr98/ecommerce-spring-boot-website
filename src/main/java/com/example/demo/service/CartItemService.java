@@ -7,6 +7,8 @@ import com.example.demo.repository.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartItemService {
     private final CartItemRepository cartItemRepository;
@@ -17,12 +19,26 @@ public class CartItemService {
         this.cartItemRepository = cartItemRepository;
         this.productService = productService;
     }
-
+    public List<CartItem> getAllCartItems(){
+        return cartItemRepository.findAll();
+    }
+    public CartItem save(CartItem cartItem){
+        return cartItemRepository.save(cartItem);
+    }
+    public CartItem getCartItemByProductId( List<CartItem> cartItems,long productId) {
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getProduct().getId() == productId) {
+                return cartItem;
+            }
+        }
+        return null;
+    }
 
     public double getSubPrice(Long id){
         CartItem cartItem = cartItemRepository.findById(id).orElse(null);
-        Product product = productService.getProductById(cartItem.getProduct().getId());
-        return cartItem.getQuantity()*product.getPrice()*(1.0-product.getDiscount());
+        double cost =cartItem.getQuantity()*cartItem.getProduct().getPrice();
+        double dc= cost*((cartItem.getQuantity()*cartItem.getProduct().getDiscount())/100);
+        return cost-dc;
     }
 
 }

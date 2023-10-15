@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.service.CategoryService;
+import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class CategoryController {
     private final CategoryService categoryService;
+    @Autowired
+    private UserService userService;
+
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -19,6 +24,7 @@ public class CategoryController {
     @GetMapping("/manage-category")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String manageCategory(Model model) {
+        model.addAttribute("userrole",userService.getCurrentUser().getRoles().toString());
         model.addAttribute("categories",categoryService.getAllCategories());
         return "categories/manage-category";
     }

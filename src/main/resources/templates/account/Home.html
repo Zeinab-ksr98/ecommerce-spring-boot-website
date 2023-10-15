@@ -1,156 +1,68 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Home</title>-->
-<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}">-->
-<!--    <link rel="stylesheet" th:href="@{home.css}">-->
-
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="fragments/Hheader :: header"></div>-->
-<!--<div  style="position: relative; width: 100%; height: 100vh; overflow: hidden;" >-->
-<!--    <img th:src="@{main.jpg}" alt="pmain" style="width: 100%; height: 100%; object-fit: cover;">-->
-<!--</div>-->
-<!--<div class="container my-1">-->
-<!--    <div class="row mx-2">-->
-<!--        <div class="col-2 d-flex justify-content-between">-->
-<!--            <a href="#" th:onclick="filterProducts('all');scrollToTrendingProducts();">-->
-<!--                <div  class="rounded-circle img-fluid" style="height: 70px; width: 70px">-->
-<!--                    <img  src="https://img.icons8.com/ultraviolet/40/categorize.png"  width="50" height="50" alt="Show All" style="border-radius: 50%; margin: 5px;"/>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div class="col-2 d-flex justify-content-between" th:each="category : ${categories}">-->
-<!--            <a href="#" th:onclick="'loadProducts(' + ${category.id} + ')'" class="category-link">-->
-<!--                <img th:src="@{'/' + ${category.img}}" class="rounded-circle img-fluid" width="100" alt="cat" style="border-radius: 50%; margin: 5px;">-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--    <div class="container">-->
-<!--        <div class="trending-product__container">-->
-<!--            <div class="trending-product__cards">-->
-<!--                <div th:each="product : ${products}" data-category="${product.categoryId}" class="card">-->
-<!--                    <div class="card__heart">-->
-<!--                        <a th:href="@{/display-wishList}">-->
-<!--                            <img width="30" height="30" src="https://img.icons8.com/cute-clipart/64/like.png" alt="like"/>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                    <a th:href="@{/display-a-product/{ID}(ID=${product.id})}">-->
-<!--                        <img class="card__img" th:src="${product.urlimg}" alt="Product Image">-->
-<!--                    </a>-->
-<!--                    <div class="card__content">-->
-<!--                        <div class="content-top">-->
-<!--                            <span class="card__title" th:text="${product.name}"></span>-->
-<!--                            <span class="card__subtitle" th:text="${product.description}"></span>-->
-<!--                            <h5 class="card-title">-->
-<!--                                <span class="badge badge-primary" th:if="${product.discount != 0}" th:text="${'-' + product.discount + '%'}">Discount</span>-->
-<!--                            </h5>-->
-<!--                            <h6 class="card-subtitle mb-2 text-muted">-->
-<!--                                <span th:if="${product.discount != 0}" style="text-decoration: line-through;" th:text="${'Original$' + product.price}"></span>-->
-<!--                                <span th:text="${'$' + (product.price - (product.price * product.discount / 100))}"></span>-->
-<!--                            </h6>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <button class="btn">-->
-<!--                                Add to cart-->
-<!--                                <img width="30" height="30" src="https://img.icons8.com/ultraviolet/40/add-shopping-cart.png" alt="add-shopping-cart"/>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--<script>-->
-<!--        // Function to filter products based on the selected category-->
-<!--        function loadProducts(categoryId) {-->
-<!--            const productCards = document.querySelectorAll('.card'); // Get all product cards-->
-<!--            productCards.forEach(card => {-->
-<!--                const productCategory = card.getAttribute('data-category'); // Get the data-category attribute of each card-->
-<!--                if (categoryId === 'all' || productCategory === categoryId) {-->
-<!--                    card.style.display = 'block'; // Show the card if it matches the selected category or 'all'-->
-<!--                } else {-->
-<!--                    card.style.display = 'none'; // Hide the card if it doesn't match the selected category-->
-<!--                }-->
-<!--            });-->
-<!--            scrollToTrendingProducts(); // Scroll to trending products container after loading products-->
-<!--        }-->
-
-<!--        // Initial load with all products displayed-->
-<!--        filterProducts('all');-->
-
-<!--        // Event listener for category links-->
-<!--        const categoryLinks = document.querySelectorAll('.category-link');-->
-<!--        categoryLinks.forEach(link => {-->
-<!--        link.addEventListener('click', (event) => {-->
-<!--            event.preventDefault();-->
-<!--            const categoryId = event.target.getAttribute('data-category-id');-->
-<!--            filterProducts(categoryId);-->
-<!--        });-->
-<!--    });-->
-
-<!--        function scrollToTrendingProducts() {-->
-<!--        const trendingProducts = document.getElementById('trendingProducts');-->
-<!--        trendingProducts.scrollIntoView({ behavior: 'smooth' });-->
-<!--    }-->
-<!--</script>-->
-
-
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{home.css}">
+    <link rel="stylesheet" th:href="@{/home.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
+
+
 </head>
 <body>
 
-<div th:replace="fragments/Hheader :: header"></div>
+<div th:replace="fragments/header :: header"></div>
 <div style="position: relative; width: 100%; height: 100vh; overflow: hidden;">
-    <img th:src="@{main.jpg}" alt="pmain" style="width: 100%; height: 100%; object-fit: cover;">
+    <img th:src="@{'/' +main.jpg}" alt="pmain" style="width: 100%; height: 100%; object-fit: cover;">
 </div>
+<!--category filter-->
 <div class="container my-1">
     <div class="row mx-2">
         <div class="col-2 d-flex justify-content-between">
-            <a href="#" onclick="filterProducts('all');">
+            <a th:href="@{/home}">
                 <div class="rounded-circle img-fluid" style="height: 70px; width: 70px">
-                    <img src="https://img.icons8.com/ultraviolet/40/categorize.png" width="50" height="50"
-                         alt="Show All" style="border-radius: 50%; margin: 5px;"/>
+                    <img th:src="@{/all-products.png}" width="100px" alt="All">
                 </div>
             </a>
         </div>
         <div class="col-2 d-flex justify-content-between" th:each="category : ${categories}">
-            <a href="#" onclick="filterProducts(${category.id});" class="category-link">
+            <a th:href="@{/home(catid=${category.id})}" class="category-link">
                 <img th:src="@{'/' + ${category.img}}" class="rounded-circle img-fluid" width="100" alt="cat"
                      style="border-radius: 50%; margin: 5px;">
             </a>
         </div>
     </div>
 </div>
+<!--search by nae and category-->
+<div class="container">
+    <form th:action="@{/search}" method="get">
+        <div class="search-container">
+            <input type="text" id="search-input" name="keyword" placeholder="Search by name or description">
+            <button type="submit" id="search-button">Search</button>
+        </div>
+    </form>
+</div>
+
+
 
 <div class="container">
     <div class="trending-product__container">
         <div class="trending-product__cards">
             <div th:each="product : ${products}" data-category="${product.category.getId()}" class="card">
+                <!--                favorit-->
                 <div class="card__heart">
-                    <a th:href="@{/display-wishList}">
-                        <img width="30" height="30" src="https://img.icons8.com/cute-clipart/64/like.png"
-                             alt="like"/>
+                    <a th:href="@{/add-wish/{pID}(pID=${product.id})}">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/155fa9/like--v1.png"
+                             alt="like--v1"/>
                     </a>
                 </div>
                 <a th:href="@{/display-a-product/{ID}(ID=${product.id})}">
-                    <img class="card__img" th:src="${product.urlimg}" alt="Product Image">
+                    <img class="card__img" th:src="${'/' +product.urlimg}" alt="Product Image">
                 </a>
                 <div class="card__content">
                     <div class="content-top">
-                        <span class="card__title" th:text="${product.name}"></span>
+                        <a th:href="@{/display-a-product/{ID}(ID=${product.id})}" style="text-decoration: none">
+                            <span class="card__title" th:text="${product.name}"></span>
+                        </a>
                         <span class="card__subtitle" th:text="${product.description}"></span>
                         <h5 class="card-title">
                             <span class="badge badge-primary" th:if="${product.discount != 0}"
@@ -162,13 +74,16 @@
                             <span th:text="${'$' + (product.price - (product.price * product.discount / 100))}"></span>
                         </h6>
                     </div>
-                    <div>
-                        <button class="btn">
-                            Add to cart
-                            <img width="30" height="30"
-                                 src="https://img.icons8.com/ultraviolet/40/add-shopping-cart.png"
-                                 alt="add-shopping-cart"/>
-                        </button>
+                    <div style="color:#155FA9 ">
+
+                        <a th:href="@{/add-cart/{pID}(pID=${product.id})}" target="_self" class="btn"
+                           style="background: transparent; border: 2px solid #155FA9;" th:if="${product.availability}">
+                            <b>Add to cart</b>
+                            <img width="20" height="20"
+                                 src="https://img.icons8.com/pastel-glyph/64/155fa9/shopping-cart--v2.png"
+                                 alt="shopping-cart--v2"/>
+                        </a>
+                        <span th:unless="${product.availability}">Product is not available</span>
                     </div>
                 </div>
             </div>
@@ -176,23 +91,5 @@
     </div>
 </div>
 
-<script>
-    // Function to filter products based on the selected category
-    function filterProducts(categoryId) {
-        const productCards = document.querySelectorAll('.card'); // Get all product cards
-        productCards.forEach(card => {
-            const productCategory = card.getAttribute('data-category'); // Get the data-category attribute of each card
-            if (productCategory === categoryId.toString()) {
-                card.style.display = 'block'; // Show the card if it matches the selected category or 'all'
-            } else {
-                card.style.display = 'none'; // Hide the card if it doesn't match the selected category
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        filterProducts('all');
-    });
-</script>
 </body>
 </html>

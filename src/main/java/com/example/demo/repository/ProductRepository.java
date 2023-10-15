@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -15,24 +16,19 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findProductByName(String name);
 
     boolean existsByName(String name);
-    //originaly we have find all
-    //but in our case we need only the non deleted ones
-    //used mainly for the admin
 
-    //i must add the condition of seller id
     @Query("SELECT p FROM Product p WHERE  p.Deleted = false")
     List<Product> findAllProducts();
-    @Query("SELECT p FROM Product p WHERE  p.Deleted = false ORDER BY p.availability DESC")
-    List<Product> SortAllProductsByAvailability();
+    @Query("SELECT p FROM Product p WHERE  p.Deleted = false AND p.seller.id =?1")
+    List<Product> findAllProductsForSeller(@Param("sellerId") UUID sellerId);
+    @Query("SELECT p FROM Product p WHERE  p.Deleted = false AND p.seller.id =?1 ORDER BY p.availability DESC")
+    List<Product> SortAllProductsForSeller(@Param("sellerId") UUID sellerId);
 
 
 
     //and the following will be used mainly by on the customer side
-    @Query("SELECT p FROM Product p WHERE p.availability = true AND p.Deleted = false")
-    List<Product> findAllAvailableProducts();
-
-    @Query("SELECT p FROM Product p WHERE p.availability = true AND p.Deleted = false AND p.category.id =?1")
-    List<Product> FilterAllAvailableProductsByCategory(@Param("categoryId") Long categoryId);;
+    @Query("SELECT p FROM Product p WHERE p.Deleted = false AND p.category.id =?1")
+    List<Product> FilterAllProductsByCategory(@Param("categoryId") Long categoryId);;
 
 
     @Query("SELECT p FROM Product p WHERE " +

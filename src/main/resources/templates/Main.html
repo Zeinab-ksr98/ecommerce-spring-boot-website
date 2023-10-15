@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ZShop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/Main.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
+    <style>
+        :root {
+            --darkGrey: #155FA9;
+            --lightGrey: rgb(177, 177, 177);
+            --pFont: "Raleway", sans-serif;
+        }
+        html {
+            font-size: 62.5%;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            scrollbar-width: none;
+        }
+        body {
+            font-family: var(--pFont);
+            font-size: 16px;
+            background-color: #164FA9;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        *,
+        :after,
+        :before {
+            box-sizing: inherit;
+            -webkit-tap-highlight-color: transparent;
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            transition: transform 0.5s, opacity 0.2s;
+            -webkit-transition: transform 0.5s, opacity 0.2s;
+            -moz-transition: transform 0.5s, opacity 0.2s;
+        }
+        .mn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .noticeBar h2 {
+            position: relative;
+            text-transform: uppercase;
+            color: #fff;
+            padding: 0.2rem;
+            pointer-events: fill;
+            cursor: default;
+            animation: textFlash 10s ease-in-out infinite;
+            -webkit-animation: textFlash 10s ease-in-out infinite;
+            -moz-animation: textFlash 10s ease-in-out infinite;
+            font-size: 80%;
+            opacity: 0;
+            margin: 0 2px;
+        }
+
+
+        @keyframes textFlash {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @-moz-keyframes textFlash {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes textFlash {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        .cont-nav {
+            position: fixed;
+            width: 100%;
+            height: 6rem;
+            margin: 0 auto;
+            overflow: hidden;
+            background: linear-gradient(274deg, #164FA9 10%, #fff 100%);
+        }
+
+
+
+        .pMain {
+            z-index: 3;
+            display: flex;
+            grid-template-columns: 1fr 1fr;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tittle {
+            cursor: pointer;
+            z-index: -1;
+            background-color: darkblue;
+            font-size: 4rem;
+            margin-left: 2rem;
+            background-image: linear-gradient(-75deg, transparent 0, transparent 5%, rgba(255, 255, 255, 0.5) 5%, rgba(255, 255, 255, 0.5) 10%, transparent 10%, transparent 100%);
+            background-size: 200% 100%;
+            animation: reflection 10s ease-in-out infinite;
+            -webkit-animation: reflection 10s ease-in-out infinite;
+            -moz-animation: reflection 10s ease-in-out infinite;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+        @keyframes reflection {
+            100%,
+            20% {
+                background-position: -120% 0;
+            }
+        }
+        @-moz-keyframes reflection {
+            100%,
+            20% {
+                background-position: -120% 0;
+            }
+        }
+        @-webkit-keyframes reflection {
+            100%,
+            20% {
+                background-position: -120% 0;
+            }
+        }
+        .tittle span {
+            font-weight: 400;
+        }
+        .nav-main {
+            margin-right: 0.9rem;
+        }
+        .nav-cont {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .nav-cont a {
+            color: #3b3b3b;
+            margin: 0 5px;
+            text-decoration: none;
+            padding: 1rem 1rem;
+            transition: 0.3s;
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            border-radius: 9px;
+            align-items: center;
+            text-transform: uppercase;
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+        .ul-cont {
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            border-radius: 9px;
+            margin-left: 0.5rem;
+            padding: 0.7rem 0;
+        }
+        .nav-cont a:hover {
+            color: #fff;
+        }
+
+
+
+        .hero-cont {
+
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        .hero {
+            width: 100%;
+            height: 100%;
+        }
+        .heroText-cont {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            background-image: url("static/main.jpg");
+            background-color: honeydew;
+        }
+        .heroText {
+            height: 100%;
+            width: 100%;
+            color: #cfcfcf;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+        .hText-cont {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            width: 55%;
+            background-color:  #164FA9;
+            padding: 2rem;
+            border-radius: 10%;
+            align-items: center;
+            transition: all 0.5s;
+        }
+
+        .heroText .tbs-cont {
+            width: 33vh;
+            height: 100%;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+        }
+        .scrollText-cont {
+            width: 100%;
+            height: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            position: relative;
+            overflow: hidden;
+        }
+        .scrollText {
+            display: grid;
+        }
+        .scrollText span {
+            display: block;
+            height: 100%;
+            animation: scrollText 12s infinite;
+            -webkit-animation: scrollText 12s infinite;
+            -moz-animation: scrollText 12s infinite;
+        }
+        @keyframes scrollText {
+            0% {
+                transform: translateY(0);
+                color: white;
+            }
+            4% {
+                transform: translateY(-112%);
+                color: cornflowerblue;
+            }
+            7% {
+                transform: translateY(-100%);
+                color: snow;
+            }
+            15% {
+                transform: translateY(-100%);
+                color: beige;
+            }
+            19% {
+                transform: translateY(-212%);
+                color: dimgrey;
+            }
+            22% {
+                transform: translateY(-200%);
+                color: thistle;
+            }
+            30% {
+                transform: translateY(-200%);
+                color: #2980b9;
+            }
+            34% {
+                transform: translateY(-312%);
+                color: grey;
+            }
+            37% {
+                transform: translateY(-300%);
+                color: plum;
+            }
+            45% {
+                transform: translateY(-300%);
+                color: mediumpurple;
+            }
+            49% {
+                transform: translateY(-412%);
+                color: #b3b3b3;
+            }
+            52% {
+                transform: translateY(-400%);
+                color: #444B54;
+            }
+            60% {
+                transform: translateY(-400%);
+                color: #2980b9;
+            }
+            68% {
+                transform: translateY(-400%);
+                color: #fff;
+            }
+            76% {
+                transform: translateY(-400%);
+                color: royalblue;
+            }
+            84% {
+                transform: translateY(-400%);
+                color: darkblue;
+            }
+            100% {
+                transform: translateY(-400%);
+                color: #2980b9;
+            }
+        }
+        @-webkit-keyframes scrollText {
+            0% {
+                -webkit-transform: translateY(0);
+                color: #2980b9;
+            }
+            4% {
+                -webkit-transform: translateY(-112%);
+                color: #8e44ad;
+            }
+            7% {
+                -webkit-transform: translateY(-100%);
+                color: #8e44ad;
+            }
+            15% {
+                -webkit-transform: translateY(-100%);
+                color: #8e44ad;
+            }
+            19% {
+                -webkit-transform: translateY(-212%);
+                color: #2980b9;
+            }
+            22% {
+                -webkit-transform: translateY(-200%);
+                color: #2980b9;
+            }
+            30% {
+                -webkit-transform: translateY(-200%);
+                color: #2980b9;
+            }
+            34% {
+                -webkit-transform: translateY(-312%);
+                color: #c0392b;
+            }
+            37% {
+                -webkit-transform: translateY(-300%);
+                color: #c0392b;
+            }
+            45% {
+                -webkit-transform: translateY(-300%);
+                color: #c0392b;
+            }
+            49% {
+                -webkit-transform: translateY(-412%);
+                color: #8e44ad;
+            }
+            52% {
+                -webkit-transform: translateY(-400%);
+                color: #8e44ad;
+            }
+            60% {
+                -webkit-transform: translateY(-400%);
+                color: #2980b9;
+            }
+            68% {
+                -webkit-transform: translateY(-400%);
+                color: #fff;
+            }
+            76% {
+                -webkit-transform: translateY(-400%);
+                color: #e65454;
+            }
+            84% {
+                -webkit-transform: translateY(-400%);
+                color: #8e44ad;
+            }
+            100% {
+                -webkit-transform: translateY(-400%);
+                color: #2980b9;
+            }
+        }
+        @-moz-keyframes scrollText {
+            0% {
+                -moz-transform: translateY(0);
+                color: #2980b9;
+            }
+            4% {
+                -moz-transform: translateY(-112%);
+                color: #8e44ad;
+            }
+            7% {
+                -moz-transform: translateY(-100%);
+                color: #8e44ad;
+            }
+            15% {
+                -moz-transform: translateY(-100%);
+                color: #8e44ad;
+            }
+            19% {
+                -moz-transform: translateY(-212%);
+                color: #2980b9;
+            }
+            22% {
+                -moz-transform: translateY(-200%);
+                color: #2980b9;
+            }
+            30% {
+                -moz-transform: translateY(-200%);
+                color: #2980b9;
+            }
+            34% {
+                -moz-transform: translateY(-312%);
+                color: #c0392b;
+            }
+            37% {
+                -moz-transform: translateY(-300%);
+                color: #c0392b;
+            }
+            45% {
+                -moz-transform: translateY(-300%);
+                color: #c0392b;
+            }
+            49% {
+                -moz-transform: translateY(-412%);
+                color: #8e44ad;
+            }
+            52% {
+                -moz-transform: translateY(-400%);
+                color: #8e44ad;
+            }
+            60% {
+                -moz-transform: translateY(-400%);
+                color: #2980b9;
+            }
+            68% {
+                -moz-transform: translateY(-400%);
+                color: #fff;
+            }
+            76% {
+                -moz-transform: translateY(-400%);
+                color: #e65454;
+            }
+            84% {
+                -moz-transform: translateY(-400%);
+                color: #8e44ad;
+            }
+            100% {
+                -moz-transform: translateY(-400%);
+                color: #2980b9;
+            }
+        }
+        .product-cont {
+            padding: 0 4rem;
+            margin: 5rem 0;
+            max-width: 125rem;
+            height: 190rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 1fr;
+            grid-column-gap: 0fr;
+            grid-row-gap: 3rem;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        .product-cont > :hover::before {
+            clip-path: circle(70% at 80% -25%);
+        }
+        .product-cont > :hover::after {
+            transform: scale(2) translateY(1.5rem);
+            -moz-transform: scale(2) translateY(1.5rem);
+            -webkit-transform: scale(2) translateY(1.5rem);
+            color: #505050;
+        }
+
+        .scrollpage-cont {
+            width: 100%;
+            height: 3rem;
+            bottom: 1px;
+            display: block;
+            position: relative;
+        }
+        .aboutUs-cont {
+            width: 100%;
+            height: 70rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            cursor: default;
+        }
+        .aboutUs {
+            width: 80%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr;
+            column-gap: 5rem;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+            padding: 0 3rem;
+            flex-direction: column;
+            text-align: center;
+            color: var(--lightGrey);
+        }
+        .us-cont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(54, 54, 54, 0.267);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 2rem 2rem;
+            border-radius: 9px;
+        }
+        .aboutUs-bar {
+            width: 80%;
+            height: 1px;
+            background-color: var(--lightGrey);
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+        .aboutUs > * {
+            cursor: pointer;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+        .aboutUs > :hover {
+            color: #fff;
+            transform: scale(1.05);
+            -webkit-transform: scale(1.05);
+            -moz-transform: scale(1.05);
+        }
+        .us-cont:hover {
+            box-shadow: 0 12px 13px -7px #000, -50px -50px 0 -30px transparent;
+        }
+        .aboutUs h2 {
+            text-transform: uppercase;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--darkestGrey);
+        }
+
+        .aboutUsText > :hover {
+            font-size: 0.1rem;
+            color: var(--darkestGrey);
+        }
+        .foot-cont h2 {
+            font-size: 1.9rem;
+            padding-bottom: 0.4rem;
+        }
+
+        .footck h2:hover {
+            color: #fff;
+        }
+        .address h2 {
+            text-transform: uppercase;
+        }
+        .address p {
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: var(--darkGrey);
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+        .contact li {
+            cursor: pointer;
+            color: var(--darkGrey);
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+        .contact li span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .socialIcons i {
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            color: #727272;
+            cursor: pointer;
+        }
+        .socialIcons i:hover {
+            color: #fff;
+        }
+        .socialIcons #in {
+            grid-column: 2/3;
+        }
+        .foot-cont {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 3rem;
+            transform: translateY(-5rem);
+            -webkit-transform: translateY(-5rem);
+            -moz-transform: translateY(-5rem);
+        }
+        .footck {
+            width: 75%;
+            height: 3rem;
+            color: #949494;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: absolute;
+            color: var(--darkGrey);
+        }
+        .footck h2 {
+            font-weight: 400;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            cursor: pointer;
+        }
+        @media screen and (max-width: 1024px) {
+
+            .aboutUs {
+                width: 95% !important;
+                column-gap: 2.5rem !important;
+            }
+            .hText-cont {
+                width: 65% !important;
+            }
+        }
+        @media screen and (max-width: 850px) {
+            .cont-nav {
+                overflow: visible;
+            }
+
+            .nav-cont {
+                position: absolute;
+                width: 100%;
+                height: 100vh;
+                right: 0;
+                top: 0;
+                padding: 1rem 1rem 20rem;
+                /*background-color: rgba(0, 0, 0, 0.95);*/
+                flex-direction: column;
+                align-items: center;
+                transition: all 0.5s;
+                -webkit-transition: all 0.5s;
+                -moz-transition: all 0.5s;
+                transform: translateX(100%);
+                -webkit-transform: translateX(100%);
+                -moz-transform: translateX(100%);
+                opacity: 0;
+                z-index: 3;
+            }
+            .hero-cont {
+                height: 65rem;
+            }
+            .heroText-cont {
+                margin-top: 6rem;
+                height: 59rem;
+                grid-template-columns: 1fr !important;
+                grid-template-rows: 1fr !important;
+            }
+            .hText-cont {
+                transform: scale(1.3);
+                -webkit-transform: scale(1.3);
+                -moz-transform: scale(1.3);
+                border-radius: 19px;
+                padding: 0 0 1.5rem;
+            }
+            .heroText {
+                grid-column: 1/3;
+            }
+            .noticeBar h2 {
+                font-size: 1.7rem;
+            }
+
+            .ul-cont::after {
+                position: absolute;
+                content: "";
+                align-self: flex-end;
+                width: 20rem;
+                height: 1px;
+                background: var(--lightGrey);
+                transform: scaleX(0);
+                -webkit-transform: scaleX(0);
+                -moz-transform: scaleX(0);
+                transform-origin: left;
+                -webkit-transform-origin: left;
+                -moz-transform-origin: left;
+                transition: transform 0.5s;
+                -webkit-transition: transform 0.5s;
+                -moz-transition: transform 0.5s;
+                transition-delay: 0.2s;
+                -webkit-transition-delay: 0.2s;
+                -moz-transition-delay: 0.2s;
+                z-index: -1;
+            }
+            .ul-cont:hover::after {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+            .nav-cont a:hover {
+                color: #fff;
+            }
+            .ul-cont {
+                transform: translateX(200%);
+                -webkit-transform: translateX(200%);
+                -moz-transform: translateX(200%);
+                width: 30%;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+            }
+            .ul-cont li {
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                text-align: center;
+            }
+            .nav-cont a {
+                color: var(--lightGrey);
+                width: 100%;
+                font-size: 2.5rem;
+                border-radius: 0;
+                transition: all 0.6s;
+                -webkit-transition: all 0.6s;
+                -moz-transition: all 0.6s;
+            }
+            .gallery {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                padding: 20px;
+            }
+            .aboutUs-cont {
+                height: 88rem;
+            }
+            .aboutUs #a2 {
+                order: 3 !important;
+            }
+
+            .aboutUs {
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: space-evenly;
+                width: 70% !important;
+            }
+            .aboutUs-bar {
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+            .footer-cont > * {
+                transform: scale(1.3);
+            }
+
+            .footck {
+                width: 89.5%;
+            }
+        }
+        @media (max-width: 800px) {
+            .product-cont {
+                height: 195rem;
+            }
+
+            .address p {
+                font-size: 1.7rem;
+            }
+
+        }
+        @media (max-width: 770px) {
+            .product-cont {
+                height: 230rem;
+                padding: 0 1rem;
+            }
+            .sneakerName h2 {
+                font-size: 1.7rem !important;
+            }
+            .sneakerName .snk-class h3 {
+                font-size: 1.3rem !important;
+            }
+
+        }
+
+        @media (max-width: 580px) {
+            .ul-cont {
+                width: 45%;
+            }
+            .hero-cont {
+                height: 90vh;
+            }
+            .aboutUs-cont {
+                height: 85rem !important;
+            }
+            .aboutUs {
+                width: 90% !important;
+            }
+        }
+        @media screen and (max-width: 515px) {
+            .noticeBar h2 {
+                font-size: 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+
+            .footck {
+                display: block;
+                position: relative;
+            }
+            .foot-cont {
+                height: 5rem;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                row-gap: 1rem;
+                justify-items: center;
+                transform: translateY(-8rem);
+            }
+            .v1,
+            .v2 {
+                grid-column: 1/2;
+            }
+            .v1 {
+                grid-row: 1/2;
+            }
+            .v2 {
+                grid-row: 2/3;
+                transform: translateY(0.5rem);
+            }
+        }
+        @media screen and (max-width: 440px) {
+            .aboutUs-cont {
+                height: 97rem !important;
+            }
+        }
+        @media screen and (max-width: 400px) {
+
+            .noticeBar h2 {
+                font-size: 1.15rem;
+            }
+            .aboutUs-cont {
+                height: 105rem !important;
+            }
+        }
+        @media screen and (max-width: 380px) {
+            .ul-cont {
+                width: 60%;
+            }
+        }
+        @media screen and (max-width: 340px) {
+            .product-cont {
+                height: 200rem;
+            }
+            .aboutUs {
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<header id="top">
+
+    <div class="cont-nav pMain">
+        <a href="#top">
+            <h1 class="tittle">ZShop </h1>
+        </a>
+        <div class="menuBar"></div>
+        <div class="nav-main">
+
+            <nav>
+                <ul class="nav-cont ">
+                    <div class="dec-bar"></div>
+
+                    <div class="ul-cont ul2">
+                        <li><a href="#aboutus">about us</a></li>
+                    </div>
+                    <div class="ul-cont ul4">
+                        <li><a th:href="@{/SignIn}">Shop Now</a></li>
+                    </div>
+
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</header>
+
+<div class="hero-cont">
+    <div class="hero">
+        <div class="heroText-cont">
+            <div th:replace="fragments/movingImages :: images" id="ourproducts"></div>
+
+            <div class="heroText">
+                <div class="hText-cont">
+                    <h4 class="hText-main">Embrace Your</h4><h2> Spiritual Journey</h2>
+                    <br>
+                    <div class="tbs-cont">
+                        <div class="scrollText-cont">
+                            <div class="scrollText">
+                                <h2>
+                                    <span>Headband</span>
+                                </h2>
+
+                                <h2>
+                                    <span>Phone Cases</span>
+                                </h2>
+
+                                <h2>
+                                    <span>books</span>
+                                </h2>
+
+                                <h2>
+                                    <span>Craft</span>
+                                </h2>
+
+                            </div>
+                        </div>
+                    </div>
+                    <p class="hText-p"><br>
+                        Explore a World of Islamic Elegance and Meaning. Shop our curated collection of Islamic-themed products that celebrate your faith and culture
+                    </p>
+                    <a type="button" style="text-decoration: none ; border-color: #b3b3b3" th:href="@{/SignIn}" ><h4>Shop Now</h4></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="aboutUs-cont" id="aboutus">
+    <div class="aboutUs" >
+        <div id="a1" class="us-cont">
+            <h2>Shipping</h2>
+            <div class="aboutUs-bar"></div>
+            <p>Shipping with Care to Bring Islamic Culture to Your Doorstep<br>
+                We understand the importance of a seamless shopping experience, and that's why we offer reliable and efficient shipping services. No matter where you are in the world, we are dedicated to delivering the beauty of Islamic culture to your doorstep</p>
+        </div>
+        <div id="a2" class="us-cont">
+            <h2>about us</h2>
+            <div class="aboutUs-bar"></div>
+            <p>Zshop is dedicated to sharing the beauty of Islamic culture through meticulously curated items, including artwork, literature, fashion, and home decor. Our commitment to quality, authenticity, and cultural significance ensures a rich representation of Islamic heritage. Explore, connect, and discover the essence of faith with our thoughtfully chosen products.</p>
+        </div>
+        <div id="a3" class="us-cont">
+            <h2>our mission</h2>
+            <div class="aboutUs-bar"></div>
+            <p>We foster a deeper connection to Islamic culture and faith through thoughtfully curated, high-quality products. Our mission is to inspire individuals to express their beliefs, enrich their spiritual journey, and celebrate their cultural heritage. By bridging tradition and contemporary living, we aim to positively impact our customers' spiritual connection and cultural appreciation.</p>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="foot-cont">
+        <div class="footck">
+            <h2 class="v1">Dgpad 23</h2>
+            <h2 class="v2"> zeinabksr</h2>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

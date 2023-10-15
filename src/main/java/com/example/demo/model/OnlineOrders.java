@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +21,7 @@ public class OnlineOrders {
     private double totalPrice;
 
     @ManyToMany
-    private List<Product> productList;
+    private List<CartItem> ordersList;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

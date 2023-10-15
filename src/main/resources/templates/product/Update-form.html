@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Management System</title>
+    <title>modify a product</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}" />
 
     <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">
@@ -27,10 +27,13 @@
             display: flex;
             align-items: center;
         }
+        .product-details {
+            flex-grow: 2;
+        }
 
         .product-image {
-            max-width: 200px;
-            margin-right: 20px;
+            max-width: 100%;
+            margin-right: 25px;
         }
 
         .image-replace-btn {
@@ -65,29 +68,8 @@
             bottom: 0;
             opacity: 1;
         }
-
-        .frproductinner.innerposition {
-            background: #fff none repeat scroll 0 0;
-            bottom: -20px;
-            left: 0;
-            opacity: 0;
-            padding: 30px 20px;
-            position: absolute;
-            text-align: left;
-            transition: all 0.5s ease 0s;
-            width: 100%;
-        }
-
-        .frproductinner {
-            transition: all 0.3s ease 0s;
-        }
-
-        .pill-checkbox {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: #ffffff;
-            border-radius: 20px;
-            cursor: pointer;
+        .product-card .product-image {
+            margin-right: 20px;
         }
 
         .form-group label {
@@ -120,10 +102,9 @@
     </h2>
     <div class="product-card">
         <div class="product-image">
-            <img th:src="'/'+${product.urlimg}" alt="Product Image">
+            <img th:src="'/'+${product.urlimg}" width="450px" alt="Product Image">
         </div>
-        <div>
-
+        <div class="product-details">
             <form th:action="@{/update-product}" th:object="${product}" method="post" class="centered-form">
                 <p class="image-replace-btn" data-bs-toggle="modal" data-bs-target="#imageModal">Replace Image</p>
                 <input type="hidden" class="form-control" id="imageUrl" name="imageUrl" th:field="*{urlimg}" th:value="${product.urlimg}">
@@ -156,10 +137,17 @@
                             <label for="description">Description:</label>
                             <textarea id="description" name="description" th:value="*{description}" th:field="*{description}" class="form-control"></textarea>
                         </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="availability">Available:</label>-->
+<!--                            <input type="checkbox" id="availability" name="availability" onchange="updateAvailability(this)"-->
+<!--                                   th:value="${availability}" th:checked="${availability}">-->
+<!--                        </div>-->
                         <div class="form-group">
-                            <label for="availability">Available:</label>
-                            <input type="checkbox" id="availability" name="availability" onchange="updateAvailability(this)"
-                                   th:value="${availability}" th:checked="${availability}">
+                            <input type="radio" class="form-check-input" id="status_available" name="availability" value="true" th:checked="${product.availability}" />
+                            <label for="status_available">Available</label><br>
+
+                            <input type="radio" class="form-check-input" id="status_notavailable" name="availability" value="false" th:checked="${!product.availability}" />
+                            <label for="status_notavailable">Not Available</label><br>
                         </div>
                     </div>
                 </div>

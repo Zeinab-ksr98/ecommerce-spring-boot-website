@@ -1,50 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>orders</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!--    <link rel="stylesheet" th:href="@{/style.css}" id="theme-stylesheet">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <!-- Include Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
 <div class="container bg-white py-4 rounded shadow mt-2">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="mb-0">Order List</h3>
-        <a th:href="@{/add-order-form}" class="btn btn-secondary" role="button">Create</a>
-    </div>
+<!--    inproceess-->
+    <h4>Orders In Process</h4>
     <table class="table  table-bordered rounded ">
         <thead class="table-primary">
         <tr>
             <th>Id</th>
             <th>Products</th>
+            <th>total Price</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order : ${orders}">
+        <tr th:each="order : ${orders}" th:if="${order.status.toString() == 'IN_PROCESS'}">
             <td th:text="${order.id}"></td>
             <td>
                 <ul class="list-unstyled">
-                    <li th:each="product : ${order.productList}">
-                        <p th:text="${product.name}"></p>
+                    <li th:each="orderItem : ${order.getOrdersList}">
+                        <h6 > <span th:text="${orderItem.product.getName().toString()}"></span>  <span th:text="${orderItem.getQuantity()}"></span></h6>
                     </li>
                 </ul>
             </td>
+            <td th:text="${order.totalPrice}"></td>
             <td>
                 <div class="btn-group">
                     <button class="btn" data-toggle="modal" th:attr="data-target='#updateModal'+${order.id}">
                         <img width="40" height="40" src="https://img.icons8.com/cotton/64/track-order.png" alt="change status"/>
                     </button>
 
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+<!--    delivered-->
+    <h4>Orders Delivered</h4>
+    <table class="table  table-bordered rounded ">
+        <thead class="table-primary">
+        <tr>
+            <th>Id</th>
+            <th>Products</th>
+            <th>total Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}" th:if="${order.status.toString() == 'DELIVERED'}">
+            <td th:text="${order.id}"></td>
+            <td>
+                <ul class="list-unstyled">
+                    <li th:each="orderItem : ${order.getOrdersList}">
+                        <h6 > <span th:text="${orderItem.product.getName().toString()}"></span>  <span th:text="${orderItem.getQuantity()}"></span></h6>
+                    </li>
+                </ul>
+            </td>
+            <td th:text="${order.totalPrice}"></td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn" data-toggle="modal" th:attr="data-target='#updateModal'+${order.id}">
+                        <img width="40" height="40" src="https://img.icons8.com/cotton/64/track-order.png" alt="change status"/>
+                    </button>
 
-                    <a th:href="@{/update-order/{ID}(ID=${order.id})}" class="btn" role="button">
-                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/create-new.png" alt="update"/>
-                    </a>
-                    <a th:href="@{/delete-order/{ID}(ID=${order.id})}" class="btn" role="button">
-                        <img width="40" height="40" src="https://img.icons8.com/nolan/64/delete-forever.png" alt="delete-forever"/>
-                    </a>
                 </div>
             </td>
         </tr>
@@ -61,35 +91,23 @@
                     </button>
                 </div>
                 <!-- Input fields for updating data -->
-                <form th:action="@{/update-status}" method="post">
+                <form th:action="@{/update-status}" method="post" class="mx-5 mb-4">
                     <div class="modal-body">
                         <div class="form-group">
                             <input class="form-control" type="text" name="id" id="id" th:value="${order.id}" readonly>
                         </div>
                         <div class="form-group">
-                            <input class="form-control"  name="id" id="price" th:value="${order.totalPrice}" type="hidden" >
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="id" id="productList" th:value="${order.productList}" type="hidden">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="id" id="user" th:value="${order.user}" type="hidden">
-                        </div>
-                        <div class="form-group">
                             <div th:each="statusOption : ${T(com.example.demo.model.enums.OrderStatus).values()}">
-                                <input type="checkbox" class="form-check-input"
+                                <input type="radio" class="form-check-input"
                                        th:id="${'status_' + statusOption}"
-                                       th:name="status"
+                                       th:name="updatedStatus"
                                        th:value="${statusOption}"
                                        th:checked="${order.status == statusOption}" />
                                 <label th:for="${'status_' + statusOption}" th:text="${statusOption}"></label><br>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Update Status</button>
                 </form>
             </div>
         </div>

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.model.enums.Role;
+import com.example.demo.service.CartService;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -46,6 +46,7 @@
     </style>
 </head>
 <body>
+<a th:href="@{/manage-products}" style="text-decoration: none"><h4><img width="20" height="20" src="https://img.icons8.com/deco/48/back.png" alt="back"/><span>back</span></h4></a>
 <div class="container mt-5">
     <h2 class="mb-4">Add Product</h2>
     <form action="#" th:action="@{add-product-to-list}" th:object="${product}" method="post">

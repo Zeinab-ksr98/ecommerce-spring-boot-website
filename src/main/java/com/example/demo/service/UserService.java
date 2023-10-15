@@ -23,74 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-//    @Autowired
-//    private UserRepository userRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-//
-//    public User getUserById(UUID userId) {
-//        return userRepository.findById(userId).orElse(null);
-//    }
-//
-//    public List<User> getAllUsers(){
-//        return userRepository.findAll();
-//    }
-//    public User saveUser(User user) {
-//        boolean isUpdatedUser = (user.getId() != null);
-//        if (isUpdatedUser) {
-//            User existingUser = userRepository.getReferenceById(user.getId());
-//
-//            if (user.getPassword().isEmpty()) {
-//                user.setPassword(existingUser.getPassword());
-//            } else {
-//                encodePassword(user);
-//            }
-//        } else {
-//            encodePassword(user);
-//        }
-//        userRepository.save(user);
-//        return user;
-//    }
-//    public void encodePassword(User user) {
-//        String encodePass = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodePass);
-//    }
-//    public User getUser(UUID id) throws UserNotFoundException {
-//        try {
-//            return userRepository.getReferenceById(id);
-//        } catch (NoSuchElementException ex) {
-//            throw new UserNotFoundException("Couldn't find any user with id " + id);
-//        }
-//    }
-//
-//    public void deleteUser(UUID userId) {
-//        userRepository.deleteById(userId);
-//    }
-//    public String isEmailUnique(UUID id, String email) {
-//        Optional<User> userByEmail = userRepository.findUserByEmail(email);
-//        boolean isCreatingNew = (id == null);
-//
-//        if (isCreatingNew) {
-//            if (userByEmail != null) return "Duplicate";
-//        } else {
-//            if (!Objects.equals(userByEmail.get().getId(), id)) {
-//                return "Duplicate";
-//            }
-//        }
-//        return "OK";
-//    }
-//    public boolean checkLoginRegistration(String email) {
-//        Optional<User> user = userRepository.findUserByEmail(email);
-//        return user.isEmpty();
-//    }
-//    public Optional<User> findUserByEmail(String email){
-//        return userRepository.findUserByEmail(email);
-//    }
-//
-//
-//    public User createUser(User user){
-//        return userRepository.save(user);
-//    }
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -122,6 +54,9 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+    public List<User> getAllUsersNotBlocked(){
+        return userRepository.findAllNotBlocked();
+    }
 
     public User getUserById(UUID id){
         return userRepository.findById(id).orElse(null);
@@ -129,11 +64,15 @@ public class UserService {
 
     public User createUser(User user, boolean isAdmin){
         User newUser = new User(user.getUsername(), user.email, passwordEncoder.encode(user.getPassword()), user.getPhone(), isAdmin);
-        wishService.createWish(newUser.getWish());
-        cartService.createWish(newUser.getCart());
+        wishService.save(newUser.getWish());
+        cartService.save(newUser.getCart());
         return userRepository.save(newUser);
     }
-
+    public User BlockUser(UUID id){
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(value -> value.setDeleted(true));
+        return user.orElse(null);
+    }
     public User deActivateUser(UUID id){
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(value -> value.setEnabled(false));

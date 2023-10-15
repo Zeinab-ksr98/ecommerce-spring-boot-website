@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-        <!--links-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-        <link  href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!--links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
     <style>
 
         body{
             margin:0;
             color:  #6a6f8c;
+            background:rgb(177, 177, 177);
             font:600 16px/18px 'Open Sans',sans-serif;
         }
 
@@ -24,7 +25,7 @@
             max-width:525px;
             min-height:600px;
             position:relative;
-            background: linear-gradient(to bottom, #6a6f8c,#6a6f8c, lightblue);
+            background: linear-gradient(to bottom, rgb(177, 177, 177), darkblue);
             box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
         }
         .login-snip{
@@ -162,82 +163,56 @@
             color: #b3b3b3;
         }
     </style>
-    </head>
-    <body>
-        <div class ="row mx-2">
-            <div class="col-md-6 mx-auto p-0">
-                <div class="card rounded-5">
-                <div class="login-box rounded-5 ">
-                    <div class="login-snip">
-                            <input id="tab-1" type="radio" name="tab" class="sign-in" >
-                            <label for="tab-1" class="tab">Login</label>
-                            <input id="tab-2" type="radio" name="tab" class="sign-up" checked >
-                            <label for="tab-2" class="tab">Sign Up</label>
-                            <div class="login-space">
-                                <div class="login">
-                                    <form name="f" th:action="@{/login}"  method="post">
-                                        <div class="login-form">
-                                            <div th:if="${param.error}" class="alert alert-error">
-                                                    Invalid username and password.
-                                            </div>
-                                            <div th:if="${param.logout}" class="alert alert-success">
-                                                You have been logged out.
-                                            </div>
-                                            <div class="group ">
-                                                <label for="username">Username</label>
-                                                <input type="text" id="username" name="username"/>
-                                            </div>
-                                            <div class="group ">
-                                                <label for="password">Password</label>
-                                                <input type="password" id="password" name="password"/>
-                                            </div>
-                                            <div class="form-actions">
-                                                <button type="submit" class="btn">Log in</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div>
-                                       <a th:href="@{/forgetPage}" id="forgetPasswordLink">
-                                           Forget password?
-                                       </a>
-<!--                                        <div id="forgetPasswordForm" style="display: none;">-->
-<!--                                            <form name="f" th:action="@{/forget_pass}"  method="post">-->
-<!--                                                <div class="login-form">-->
-<!--                                                    <div th:if="${param.error}" class="alert alert-error">-->
-<!--                                                        Invalid username or email.-->
-<!--                                                    </div>-->
-<!--                                                    <div th:if="${param.logout}" class="alert alert-success">-->
-<!--                                                        You have been logged out.-->
-<!--                                                    </div>-->
-<!--                                                    <div class="group ">-->
-<!--                                                        <label for="reemail" >Email</label>-->
-<!--                                                        <input type="text"  id="reemail" name="reemail"/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="group ">-->
-<!--                                                        <label for="reusername">Username</label>-->
-<!--                                                        <input type="text" id="reusername" name="re-username"/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="group ">-->
-<!--                                                        <label for="resetpassword">New Password</label>-->
-<!--                                                        <input type="password" id="resetpassword" name="resetpassword"/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-actions">-->
-<!--                                                        <button type="submit" class="btn">Reset Password</button>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </form>-->
-                                        </div>
+</head>
+<body>
+<div class ="row mx-2">
+    <div class="col-md-6 mx-auto p-0">
+        <div class="card rounded-5">
+            <div class="login-box rounded-5 ">
+                <div class="card-header">
+                     <a th:href="@{/Main}" style="color:honeydew">
+<!--                         <img th:src="@{'./'+logo1.png}" alt="home" width="50px">-->
+                         <h5>Home</h5>
+                     </a>
+                </div>
+                <div class="login-snip">
+                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                    <label for="tab-1" class="tab">Login</label>
+                    <input id="tab-2" type="radio" name="tab" class="sign-up">
+                    <label for="tab-2" class="tab">Sign Up</label>
+                    <div class="login-space">
+                        <div class="login">
+                            <form name="f" th:action="@{/login}" method="post">
+                                <fieldset>
+                                    <div th:if="${param.error}" class="alert alert-error">
+                                        Invalid username and password.
                                     </div>
-                                </div>
+                                    <div th:if="${param.logout}" class="alert alert-success">
+                                        You have been logged out.
+                                    </div>
+                                    <div class="group">
+                                        <label for="username" class="label">Username</label>
+                                        <input type="text" id="username" class="input" name="username"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="password"  class="label">Password</label>
+                                        <input type="password" id="password" class="input" name="password"/>
+                                    </div>
+                                    <div class="group">
+                                        <button type="submit" class="button">Log in</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                         <form action="/users/create" th:object="${newuser}" method="POST">
                             <div class="sign-up-form">
                                 <div class="group">
                                     <label for="newuser" class="label">Username</label>
-                                    <input id="newuser" required th:field="*{username}" type="text" class="input" placeholder="Create your Username">
+                                    <input id="newuser" th:field="*{username}" type="text" class="input" placeholder="Create your Username">
                                 </div>
                                 <div class="group">
                                     <label for="passward" class="label">Password</label>
-                                    <input id="passward" required th:field="*{password}" type="password" class="input" data-type="password" placeholder="Create your password">
+                                    <input id="passward" th:field="*{password}" type="password" class="input" data-type="password" placeholder="Create your password">
                                 </div>
                                 <div class="group">
                                     <label for="re-passward" class="label">Repeat Password</label>
@@ -245,29 +220,24 @@
                                 </div>
                                 <div class="group">
                                     <label for="email" class="label">Email Address</label>
-                                    <input id="email" required th:field="*{email}" type="email" class="input" placeholder="Enter your email address">
+                                    <input id="email" th:field="*{email}" type="email" class="input" placeholder="Enter your email address">
                                 </div>
                                 <div class="group">
                                     <label for="Phone" class="label">Phone number</label>
-                                    <input id="Phone" required th:field="*{phone}" type="text" class="input" placeholder="Enter your phone number">
+                                    <input id="Phone" th:field="*{phone}" type="text" class="input" placeholder="Enter your phone number">
                                 </div>
 
                                 <div class="group">
-                                    <input type="submit"  class="button" value="Sign Up">
+                                    <input type="submit" class="button" value="Sign Up">
                                 </div>
                             </div>
                         </form>
-                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-    </body>
-<!--    <script>-->
-<!--        document.getElementById("forgetPasswordLink").addEventListener("click", function() {-->
-<!--            document.getElementById("forgetPasswordForm").style.display = "block";-->
-<!--        });-->
-<!--    </script>-->
+</body>
 </html>

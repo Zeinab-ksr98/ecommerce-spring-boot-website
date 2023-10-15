@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.model.enums.Role;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -53,13 +56,6 @@ public class UserController {
             return e.getMessage();
         }
     }
-    @GetMapping(value = "/home")
-    @PreAuthorize("hasAnyAuthority('USER')")
-    public String displayHome(Model model) {
-        model.addAttribute("products",productService.getAllProducts());
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "customer/CustomerHome";
-    }
 
     @PostMapping(value = "/create")
     public String createUser(@ModelAttribute("newuser") User user){
@@ -72,19 +68,6 @@ public class UserController {
             return "redirect:/home";
         } catch (Exception e) {
             return "account/SignIn";
-        }
-    }
-    @PostMapping(value = "/create-admin")
-    public String createAdmin(@ModelAttribute("newuser") User user){
-        if(userService.userNameExists(user.getUsername()))
-            return "account/CreateAdmin";
-        if(userService.userEmailExists(user.getEmail()))
-            return "account/CreateAdmin";
-        try {
-            userService.createUser(user,true);
-            return "redirect:/profile";
-        } catch (Exception e) {
-            return "account/CreateAdmin";
         }
     }
 
@@ -106,22 +89,26 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/block/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public String Block(@PathVariable("id") String id){
+        userService.save(userService.BlockUser(UUID.fromString(id)));
+        userService.save(userService.deActivateUser(UUID.fromString(id)));
+        return "redirect:/manage-users";
 
-    @PostMapping(value = "/deactivate/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deActivateUser(@PathVariable("id") String id){
-        try{
-            return new ResponseEntity<>(userService.deActivateUser(UUID.fromString(id)), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    }
+    @GetMapping(value = "/deactivate/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public String deActivateUser(@PathVariable("id") String id){
+        userService.save(userService.deActivateUser(UUID.fromString(id)));
+        return "redirect:/manage-users";
+
     }
 
-    @PostMapping(value = "/activate/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> activateUser(@PathVariable("id") String id){
-        try{
-            return new ResponseEntity<>(userService.activate(UUID.fromString(id)), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping(value = "/activate/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public String activateUser(@PathVariable("id") String id){
+        userService.save(userService.activate(UUID.fromString(id)));
+        return "redirect:/manage-users";
     }
 }
