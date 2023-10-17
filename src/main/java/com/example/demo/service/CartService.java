@@ -27,6 +27,8 @@ public class CartService {
     public Cart getCartById(Long id){
         return cartRepository.findById(id).orElse(null);
     }
+    //used in display to keep cart up to date if a product is unavailable
+
 
     public Cart save(Cart cart){
         return cartRepository.save(cart);
@@ -45,12 +47,12 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public CartDto mapToDto(Cart cart){
-        return new CartDto(cart.getId(),cart.getCartItemList());
-    }
-    public List<CartDto> mapToDtoList(List<Cart> cart){
-        return cart.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
+//    public CartDto mapToDto(Cart cart){
+//        return new CartDto(cart.getId(),cart.getCartItemList());
+//    }
+//    public List<CartDto> mapToDtoList(List<Cart> cart){
+//        return cart.stream().map(this::mapToDto).collect(Collectors.toList());
+//    }
 
 
 }

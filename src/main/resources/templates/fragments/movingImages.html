@@ -5,111 +5,81 @@
     <title>Footer</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
     <style>
-        /** code by webdevtrick ( https://webdevtrick.com ) **/
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-        }
+        /*body {*/
+        /*    margin: 0;*/
+        /*    padding: 0;*/
+        /*    min-height: 100vh;*/
+        /*    min-width: 100%;*/
+        /*    display: grid;*/
+        /*    place-items: center;*/
+        /*}*/
 
-        .myimages {
-            display: flex;
-            overflow: hidden;
-            height: 50vw;
-            background: #333;
-        }
+        /*.myimages {*/
+        /*    display: flex;*/
+        /*    overflow: hidden;*/
+        /*    !*height: 50vw;*!*/
+        /*    background: transparent;*/
+        /*}*/
 
-        .myimages img {
-            max-width: 100%;
-            vertical-align: middle;
-            border: 2px solid white;
-            box-sizing: border-box;
-            transition: opacity .2s;
-        }
+        /*.myimages img {*/
+        /*    max-width: 100%;*/
+        /*    vertical-align: middle;*/
+        /*    border: 2px solid white;*/
+        /*    box-sizing: border-box;*/
+        /*    transition: opacity .2s;*/
+        /*}*/
 
-        .myimages:hover img {
-            opacity: 0.5;
-        }
+        /*.myimages:hover img {*/
+        /*    opacity: 0.5;*/
+        /*}*/
 
-        .myimages img:hover {
-            opacity: 1;
-        }
+        /*.myimages img:hover {*/
+        /*    opacity: 1;*/
+        /*}*/
 
-        .first-column {
-            animation: var(--animation, none) 16s infinite linear;
-        }
+        /*.column {*/
+        /*    animation: var(--animation, none) 16s infinite linear;*/
+        /*}*/
 
-        .first-column:hover {
-            animation-play-state: paused;
-        }
+        /*.column:hover {*/
+        /*    animation-play-state: paused;*/
+        /*}*/
 
-        .first-column:nth-of-type(odd) {
-            align-self: flex-end;
-            --direction: 50%;
-        }
+        /*.column:nth-of-type(odd) {*/
+        /*    align-self: flex-end;*/
+        /*    --direction: 50%;*/
+        /*}*/
 
-        @keyframes slide {
-            to {
-                -webkit-transform: translateY(var(--direction, -50%));
-                transform: translateY(var(--direction, -50%));
-            }
-        }
+        /*@keyframes slide {*/
+        /*    to {*/
+        /*        -webkit-transform: translateY(var(--direction, -50%));*/
+        /*        transform: translateY(var(--direction, -50%));*/
+        /*    }*/
+        /*}*/
     </style>
 </head>
 <body>
 <div th:fragment="images">
     <div class="myimages">
 
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=1" alt="image"></a>
+        <div class="row">
+            <a href="#"><img th:src="@{/b1.png}" alt="image"></a>
             <a href="#"><img src="https://picsum.photos/300/300?random=2" alt="image"></a>
             <a href="#"><img src="https://picsum.photos/300/300?random=3" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=4" alt="image"></a>
+            <a href="#"><img src="https://picsum.photos/300/300?random=2" alt="image"></a>
+
+
         </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=5" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=6" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=7" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=8" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=9" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=10" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=11" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=12" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=13" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=14" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=15" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=16" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=17" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=18" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=19" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=20" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=21" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=22" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=23" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=24" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=25" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=26" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=27" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=28" alt="image"></a>
-        </div>
-        <div class="first-column">
-            <a href="#"><img src="https://picsum.photos/300/300?random=29" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=30" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=31" alt="image"></a>
-            <a href="#"><img src="https://picsum.photos/300/300?random=32" alt="image"></a>
-        </div>
+<!--        <div class="column">-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=5" alt="image"></a>-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=6" alt="image"></a>-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=7" alt="image"></a>-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=2" alt="image"></a>-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=3" alt="image"></a>-->
+<!--            <a href="#"><img src="https://picsum.photos/300/300?random=3" alt="image"></a>-->
+
+<!--        </div>-->
+
     </div>
 </div>
 

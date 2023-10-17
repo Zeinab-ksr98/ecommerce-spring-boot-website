@@ -176,8 +176,22 @@
         <!-- Use Thymeleaf to loop through your data -->
         <tr th:each="cartItem : ${cartItems}">
             <td th:text="${cartItem.product.name}"></td>
-            <td th:text="${cartItem.product.price}"></td>
-            <td th:text="${cartItem.quantity}"></td>
+            <td th:text="${cartItem.product.price}+'$'" ></td>
+            <td >
+                <span>
+                    <a th:href="@{/modify-quantity-cart/{pID}/{q}(pID=${cartItem.product.id},q=${cartItem.quantity -1})}">
+                        <img width="10" height="10" src="https://img.icons8.com/emoji/48/minus-emoji.png" alt="minus-emoji"/>
+                    </a>
+                </span>
+                <span th:text="${cartItem.quantity}">
+                </span>
+
+                <span>
+                    <a th:href="@{/modify-quantity-cart/{pID}/{q}(pID=${cartItem.product.id},q=${cartItem.quantity +1})}">
+                        <img width="10" height="10" src="https://img.icons8.com/emoji/48/plus-emoji.png" alt="plus-emoji"/>
+                    </a>
+                </span>
+            </td>
             <td>
                 <a th:href="@{/delete-cart/{pID}(pID=${cartItem.product.id})}" style="text-decoration: none">x </a>
             </td>

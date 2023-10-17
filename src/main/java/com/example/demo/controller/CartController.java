@@ -91,12 +91,11 @@ public String addItemToCart(@PathVariable long pID) {
         User user = userService.getUserById(userId);
 
         Cart cart = user.getCart();
-        Product product = productService.getProductById(pID);
-        CartItem cartItem = new CartItem(product, q);
-        cart.getCartItemList().add(cartItem);
+        CartItem cartItem = cartItemService.getCartItemByProductId(cart.getCartItemList(),pID);
+        cartItem.setQuantity(q);
+        cartItemService.save(cartItem);
         cartService.setTotal(cart);
-        cart.setUser(user);
-        userService.save(user);
+        cartService.save(cart);
 
         return "redirect:/display-cart";
     }

@@ -31,19 +31,23 @@
             </a>
         </div>
     </div>
-</div>
-<!--search by nae and category-->
-<div class="container">
-    <form th:action="@{/search}" method="get">
-        <div class="search-container">
-            <input type="text" id="search-input" name="keyword" placeholder="Search by name or description">
-            <button type="submit" id="search-button">Search</button>
+    <div class="row mx-0 my-1">
+        <div class="col-7 d-flex justify-content-between">
+
         </div>
-    </form>
+        <!--search by name and description-->
+        <div class="col-5 d-flex justify-content-between">
+            <form th:action="@{/search}" method="get">
+                <div class="search-container">
+                    <input type="text" id="search-input" name="keyword" placeholder="Search by name or description">
+                    <button type="submit" id="search-button">Search</button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
 </div>
-
-
-
 <div class="container">
     <div class="trending-product__container">
         <div class="trending-product__cards">

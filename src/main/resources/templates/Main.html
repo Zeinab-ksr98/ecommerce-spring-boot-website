@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0">
@@ -9,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/Main.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.1/css/bootstrap.min.css}"/>
     <style>
         :root {
@@ -17,6 +15,7 @@
             --lightGrey: rgb(177, 177, 177);
             --pFont: "Raleway", sans-serif;
         }
+
         html {
             font-size: 62.5%;
             box-sizing: border-box;
@@ -26,14 +25,17 @@
             background-size: cover;
             scrollbar-width: none;
         }
+
         body {
             font-family: var(--pFont);
             font-size: 16px;
             background-color: #164FA9;
         }
+
         body::-webkit-scrollbar {
             display: none;
         }
+
         *,
         :after,
         :before {
@@ -47,6 +49,7 @@
             -webkit-transition: transform 0.5s, opacity 0.2s;
             -moz-transition: transform 0.5s, opacity 0.2s;
         }
+
         .mn {
             display: flex;
             flex-direction: column;
@@ -84,6 +87,7 @@
                 opacity: 0;
             }
         }
+
         @-moz-keyframes textFlash {
             0% {
                 opacity: 0;
@@ -95,6 +99,7 @@
                 opacity: 0;
             }
         }
+
         @-webkit-keyframes textFlash {
             0% {
                 opacity: 0;
@@ -106,6 +111,7 @@
                 opacity: 0;
             }
         }
+
         .cont-nav {
             position: fixed;
             width: 100%;
@@ -116,7 +122,6 @@
         }
 
 
-
         .pMain {
             z-index: 3;
             display: flex;
@@ -124,6 +129,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .tittle {
             cursor: pointer;
             z-index: -1;
@@ -139,34 +145,41 @@
             background-clip: text;
             -webkit-background-clip: text;
         }
+
         @keyframes reflection {
             100%,
             20% {
                 background-position: -120% 0;
             }
         }
+
         @-moz-keyframes reflection {
             100%,
             20% {
                 background-position: -120% 0;
             }
         }
+
         @-webkit-keyframes reflection {
             100%,
             20% {
                 background-position: -120% 0;
             }
         }
+
         .tittle span {
             font-weight: 400;
         }
+
         .nav-main {
             margin-right: 0.9rem;
         }
+
         .nav-cont {
             display: flex;
             justify-content: space-evenly;
         }
+
         .nav-cont a {
             color: #3b3b3b;
             margin: 0 5px;
@@ -181,6 +194,7 @@
             font-size: 1.7rem;
             font-weight: 700;
         }
+
         .ul-cont {
             transition: all 0.5s;
             -webkit-transition: all 0.5s;
@@ -189,10 +203,10 @@
             margin-left: 0.5rem;
             padding: 0.7rem 0;
         }
+
         .nav-cont a:hover {
             color: #fff;
         }
-
 
 
         .hero-cont {
@@ -204,18 +218,22 @@
             left: 0;
             overflow: hidden;
         }
+
         .hero {
             width: 100%;
             height: 100%;
+            background-color: transparent;
+
         }
+
         .heroText-cont {
             width: 100%;
             height: 100%;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            background-image: url("static/main.jpg");
             background-color: honeydew;
         }
+
         .heroText {
             height: 100%;
             width: 100%;
@@ -226,6 +244,7 @@
             align-items: center;
             user-select: none;
         }
+
         .hText-cont {
             display: flex;
             flex-direction: column;
@@ -233,7 +252,7 @@
             align-items: flex-start;
             text-align: center;
             width: 55%;
-            background-color:  #164FA9;
+            background-color: #164FA9;
             padding: 2rem;
             border-radius: 10%;
             align-items: center;
@@ -247,6 +266,7 @@
             display: flex;
             justify-content: center;
         }
+
         .scrollText-cont {
             width: 100%;
             height: 2.5rem;
@@ -256,9 +276,11 @@
             position: relative;
             overflow: hidden;
         }
+
         .scrollText {
             display: grid;
         }
+
         .scrollText span {
             display: block;
             height: 100%;
@@ -266,6 +288,7 @@
             -webkit-animation: scrollText 12s infinite;
             -moz-animation: scrollText 12s infinite;
         }
+
         @keyframes scrollText {
             0% {
                 transform: translateY(0);
@@ -336,6 +359,7 @@
                 color: #2980b9;
             }
         }
+
         @-webkit-keyframes scrollText {
             0% {
                 -webkit-transform: translateY(0);
@@ -406,6 +430,7 @@
                 color: #2980b9;
             }
         }
+
         @-moz-keyframes scrollText {
             0% {
                 -moz-transform: translateY(0);
@@ -476,6 +501,7 @@
                 color: #2980b9;
             }
         }
+
         .product-cont {
             padding: 0 4rem;
             margin: 5rem 0;
@@ -493,9 +519,11 @@
             -webkit-user-select: none;
             -moz-user-select: none;
         }
+
         .product-cont > :hover::before {
             clip-path: circle(70% at 80% -25%);
         }
+
         .product-cont > :hover::after {
             transform: scale(2) translateY(1.5rem);
             -moz-transform: scale(2) translateY(1.5rem);
@@ -510,6 +538,7 @@
             display: block;
             position: relative;
         }
+
         .aboutUs-cont {
             width: 100%;
             height: 70rem;
@@ -520,6 +549,17 @@
             overflow: hidden;
             cursor: default;
         }
+        .products-cont {
+            width: 100%;
+            height: 66rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .products-cont img:hover {
+            transform: scale(1.1); /* Zoom in the image by 10% on hover */
+        }
+
         .aboutUs {
             width: 80%;
             height: 100%;
@@ -535,6 +575,7 @@
             text-align: center;
             color: var(--lightGrey);
         }
+
         .us-cont {
             display: flex;
             flex-direction: column;
@@ -545,6 +586,7 @@
             padding: 2rem 2rem;
             border-radius: 9px;
         }
+
         .aboutUs-bar {
             width: 80%;
             height: 1px;
@@ -552,21 +594,25 @@
             margin-bottom: 2rem;
             margin-top: 2rem;
         }
+
         .aboutUs > * {
             cursor: pointer;
             transition: all 0.5s;
             -webkit-transition: all 0.5s;
             -moz-transition: all 0.5s;
         }
+
         .aboutUs > :hover {
             color: #fff;
             transform: scale(1.05);
             -webkit-transform: scale(1.05);
             -moz-transform: scale(1.05);
         }
+
         .us-cont:hover {
             box-shadow: 0 12px 13px -7px #000, -50px -50px 0 -30px transparent;
         }
+
         .aboutUs h2 {
             text-transform: uppercase;
             font-size: 3rem;
@@ -578,6 +624,7 @@
             font-size: 0.1rem;
             color: var(--darkestGrey);
         }
+
         .foot-cont h2 {
             font-size: 1.9rem;
             padding-bottom: 0.4rem;
@@ -586,9 +633,11 @@
         .footck h2:hover {
             color: #fff;
         }
+
         .address h2 {
             text-transform: uppercase;
         }
+
         .address p {
             cursor: pointer;
             font-size: 1.4rem;
@@ -597,6 +646,7 @@
             -webkit-transition: all 0.5s;
             -moz-transition: all 0.5s;
         }
+
         .contact li {
             cursor: pointer;
             color: var(--darkGrey);
@@ -604,6 +654,7 @@
             -webkit-transition: all 0.5s;
             -moz-transition: all 0.5s;
         }
+
         .contact li span {
             font-size: 1.4rem;
             font-weight: 700;
@@ -616,12 +667,15 @@
             color: #727272;
             cursor: pointer;
         }
+
         .socialIcons i:hover {
             color: #fff;
         }
+
         .socialIcons #in {
             grid-column: 2/3;
         }
+
         .foot-cont {
             position: absolute;
             display: flex;
@@ -633,6 +687,7 @@
             -webkit-transform: translateY(-5rem);
             -moz-transform: translateY(-5rem);
         }
+
         .footck {
             width: 75%;
             height: 3rem;
@@ -646,6 +701,7 @@
             position: absolute;
             color: var(--darkGrey);
         }
+
         .footck h2 {
             font-weight: 400;
             transition: all 0.5s;
@@ -653,16 +709,19 @@
             -moz-transition: all 0.5s;
             cursor: pointer;
         }
+
         @media screen and (max-width: 1024px) {
 
             .aboutUs {
                 width: 95% !important;
                 column-gap: 2.5rem !important;
             }
+
             .hText-cont {
                 width: 65% !important;
             }
         }
+
         @media screen and (max-width: 850px) {
             .cont-nav {
                 overflow: visible;
@@ -687,15 +746,19 @@
                 opacity: 0;
                 z-index: 3;
             }
+
             .hero-cont {
                 height: 65rem;
             }
+
             .heroText-cont {
+                background-color: transparent;
                 margin-top: 6rem;
                 height: 59rem;
                 grid-template-columns: 1fr !important;
                 grid-template-rows: 1fr !important;
             }
+
             .hText-cont {
                 transform: scale(1.3);
                 -webkit-transform: scale(1.3);
@@ -703,9 +766,11 @@
                 border-radius: 19px;
                 padding: 0 0 1.5rem;
             }
+
             .heroText {
                 grid-column: 1/3;
             }
+
             .noticeBar h2 {
                 font-size: 1.7rem;
             }
@@ -731,13 +796,16 @@
                 -moz-transition-delay: 0.2s;
                 z-index: -1;
             }
+
             .ul-cont:hover::after {
                 transform: scaleX(1);
                 transform-origin: left;
             }
+
             .nav-cont a:hover {
                 color: #fff;
             }
+
             .ul-cont {
                 transform: translateX(200%);
                 -webkit-transform: translateX(200%);
@@ -747,6 +815,7 @@
                 justify-content: center;
                 display: flex;
             }
+
             .ul-cont li {
                 width: 100%;
                 align-items: center;
@@ -754,6 +823,7 @@
                 display: flex;
                 text-align: center;
             }
+
             .nav-cont a {
                 color: var(--lightGrey);
                 width: 100%;
@@ -763,16 +833,11 @@
                 -webkit-transition: all 0.6s;
                 -moz-transition: all 0.6s;
             }
-            .gallery {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                padding: 20px;
-            }
+
             .aboutUs-cont {
                 height: 88rem;
             }
+
             .aboutUs #a2 {
                 order: 3 !important;
             }
@@ -783,10 +848,12 @@
                 justify-content: space-evenly;
                 width: 70% !important;
             }
+
             .aboutUs-bar {
                 margin-top: 0;
                 margin-bottom: 1rem;
             }
+
             .footer-cont > * {
                 transform: scale(1.3);
             }
@@ -795,6 +862,7 @@
                 width: 89.5%;
             }
         }
+
         @media (max-width: 800px) {
             .product-cont {
                 height: 195rem;
@@ -805,14 +873,17 @@
             }
 
         }
+
         @media (max-width: 770px) {
             .product-cont {
                 height: 230rem;
                 padding: 0 1rem;
             }
+
             .sneakerName h2 {
                 font-size: 1.7rem !important;
             }
+
             .sneakerName .snk-class h3 {
                 font-size: 1.3rem !important;
             }
@@ -823,27 +894,33 @@
             .ul-cont {
                 width: 45%;
             }
+
             .hero-cont {
                 height: 90vh;
             }
+
             .aboutUs-cont {
                 height: 85rem !important;
             }
+
             .aboutUs {
                 width: 90% !important;
             }
         }
+
         @media screen and (max-width: 515px) {
             .noticeBar h2 {
                 font-size: 1.5rem;
             }
         }
+
         @media (max-width: 480px) {
 
             .footck {
                 display: block;
                 position: relative;
             }
+
             .foot-cont {
                 height: 5rem;
                 display: grid;
@@ -853,52 +930,88 @@
                 justify-items: center;
                 transform: translateY(-8rem);
             }
+
             .v1,
             .v2 {
                 grid-column: 1/2;
             }
+
             .v1 {
                 grid-row: 1/2;
             }
+
             .v2 {
                 grid-row: 2/3;
                 transform: translateY(0.5rem);
             }
         }
+
         @media screen and (max-width: 440px) {
             .aboutUs-cont {
                 height: 97rem !important;
             }
         }
+
         @media screen and (max-width: 400px) {
 
             .noticeBar h2 {
                 font-size: 1.15rem;
             }
+
             .aboutUs-cont {
                 height: 105rem !important;
             }
         }
+
         @media screen and (max-width: 380px) {
             .ul-cont {
                 width: 60%;
             }
         }
+
         @media screen and (max-width: 340px) {
             .product-cont {
                 height: 200rem;
             }
+
             .aboutUs {
                 width: 100% !important;
             }
         }
+
+        @media screen and (min-width: 768px) {
+            .aboutUs {
+                width: 70%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .hText-cont {
+                width: 100%;
+                padding: 0;
+            }
+
+            .tbs-cont {
+                width: 100%;
+            }
+
+            .scrollText span {
+                font-size: 1rem;
+            }
+        }
+
+
+
+        .products-cont img {
+            width: 190px;
+            height: 190px;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 
 <body>
-
-
-
 <header id="top">
 
     <div class="cont-nav pMain">
@@ -911,7 +1024,9 @@
             <nav>
                 <ul class="nav-cont ">
                     <div class="dec-bar"></div>
-
+                    <div class="ul-cont ul2">
+                        <li><a href="#hero">join us</a></li>
+                    </div>
                     <div class="ul-cont ul2">
                         <li><a href="#aboutus">about us</a></li>
                     </div>
@@ -925,15 +1040,50 @@
 
     </div>
 </header>
+<div class="products-cont" id="ourproducts">
 
-<div class="hero-cont">
+        <img th:src="@{/images/b4.png}" alt="Image 1">
+        <img th:src="@{/images/c5.png}" alt="Image 2">
+        <img th:src="@{/images/b8.png}" alt="Image 3">
+        <img th:src="@{/images/l1.png}" alt="Image 4">
+        <img th:src="@{/images/p11.png}" alt="Image 5">
+        <img th:src="@{/images/p10.png}" alt="Image 6">
+
+        <img th:src="@{/images/b9.png}" alt="Image 7">
+        <img th:src="@{/images/c4.png}" alt="Image 8">
+        <img th:src="@{/images/l6.png}" alt="Image 9">
+        <img th:src="@{/images/p13.png}" alt="Image 10">
+        <img th:src="@{/images/r1.png}" alt="Image 11">
+
+        <img th:src="@{/images/c9.png}" alt="Image 12">
+        <img th:src="@{/images/l2.png}" alt="Image 13">
+        <img th:src="@{/images/p1.png}" alt="Image 14">
+        <img th:src="@{/images/r2.png}" alt="Image 15">
+
+        <img th:src="@{/images/b10.png}" alt="Image 16">
+        <img th:src="@{/images/l11.png}" alt="Image 17">
+
+        <img th:src="@{/images/b11.png}" alt="Image 18">
+        <img th:src="@{/images/b5.png}" alt="Image 19">
+        <img th:src="@{/images/c18.png}" alt="Image 20">
+        <img th:src="@{/images/l14.png}" alt="Image 21">
+        <img th:src="@{/images/c6.png}" alt="Image 18">
+    <img th:src="@{/images/w7.png}" alt="Image 19">
+    <img th:src="@{/images/l9.png}" alt="Image 20">
+    <img th:src="@{/images/p2.png}" alt="Image 21">
+    <img th:src="@{/images/l8.png}" alt="Image 19">
+    <img th:src="@{/images/w2.png}" alt="Image 20">
+    <img th:src="@{/images/w0.png}" alt="Image 21">
+
+</div>
+<div class="hero-cont " id="hero">
     <div class="hero">
         <div class="heroText-cont">
-            <div th:replace="fragments/movingImages :: images" id="ourproducts"></div>
 
             <div class="heroText">
                 <div class="hText-cont">
-                    <h4 class="hText-main">Embrace Your</h4><h2> Spiritual Journey</h2>
+                    <h4 class="hText-main">Embrace Your</h4>
+                    <h2> Spiritual Journey</h2>
                     <br>
                     <div class="tbs-cont">
                         <div class="scrollText-cont">
@@ -958,36 +1108,46 @@
                         </div>
                     </div>
                     <p class="hText-p"><br>
-                        Explore a World of Islamic Elegance and Meaning. Shop our curated collection of Islamic-themed products that celebrate your faith and culture
+                        Explore a World of Islamic Elegance and Meaning. Shop our curated collection of Islamic-themed
+                        products that celebrate your faith and culture
                     </p>
-                    <a type="button" style="text-decoration: none ; border-color: #b3b3b3" th:href="@{/SignIn}" ><h4>Shop Now</h4></a>
+                    <a type="button" style="text-decoration: none ; border-color: #b3b3b3" th:href="@{/SignIn}"><h4>Shop
+                        Now</h4></a>
 
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
-<div class="aboutUs-cont" id="aboutus">
-    <div class="aboutUs" >
+<div class="aboutUs-cont " id="aboutus">
+    <div class="aboutUs">
         <div id="a1" class="us-cont">
             <h2>Shipping</h2>
             <div class="aboutUs-bar"></div>
             <p>Shipping with Care to Bring Islamic Culture to Your Doorstep<br>
-                We understand the importance of a seamless shopping experience, and that's why we offer reliable and efficient shipping services. No matter where you are in the world, we are dedicated to delivering the beauty of Islamic culture to your doorstep</p>
+                We understand the importance of a seamless shopping experience, and that's why we offer reliable and
+                efficient shipping services. No matter where you are in the world, we are dedicated to delivering the
+                beauty of Islamic culture to your doorstep</p>
         </div>
         <div id="a2" class="us-cont">
             <h2>about us</h2>
             <div class="aboutUs-bar"></div>
-            <p>Zshop is dedicated to sharing the beauty of Islamic culture through meticulously curated items, including artwork, literature, fashion, and home decor. Our commitment to quality, authenticity, and cultural significance ensures a rich representation of Islamic heritage. Explore, connect, and discover the essence of faith with our thoughtfully chosen products.</p>
+            <p>Zshop is dedicated to sharing the beauty of Islamic culture through meticulously curated items, including
+                artwork, literature, fashion, and home decor. Our commitment to quality, authenticity, and cultural
+                significance ensures a rich representation of Islamic heritage. Explore, connect, and discover the
+                essence of faith with our thoughtfully chosen products.</p>
         </div>
         <div id="a3" class="us-cont">
             <h2>our mission</h2>
             <div class="aboutUs-bar"></div>
-            <p>We foster a deeper connection to Islamic culture and faith through thoughtfully curated, high-quality products. Our mission is to inspire individuals to express their beliefs, enrich their spiritual journey, and celebrate their cultural heritage. By bridging tradition and contemporary living, we aim to positively impact our customers' spiritual connection and cultural appreciation.</p>
+            <p>We foster a deeper connection to Islamic culture and faith through thoughtfully curated, high-quality
+                products. Our mission is to inspire individuals to express their beliefs, enrich their spiritual
+                journey, and celebrate their cultural heritage. By bridging tradition and contemporary living, we aim to
+                positively impact our customers' spiritual connection and cultural appreciation.</p>
         </div>
     </div>
+
 </div>
 <footer>
     <div class="foot-cont">
