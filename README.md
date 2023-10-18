@@ -12,11 +12,11 @@ Java Spring Boot
 - CSS
 - Bootstrap
 ## features
-- create a customer roled account 
-- log in
-- logout 
-- forget password 
-- customer can:
+1. create a customer roled account 
+2. log in
+3. logout 
+4. forget password 
+5. customer can:
 - view all product 
 - add to wish list 
 - view wish list 
@@ -32,7 +32,7 @@ Java Spring Boot
 - delete address
 - view order history and status
 - reset his passward
-admin(product provider) can:
+6. admin(product provider) can:
 - all the customer features 
 - manage users(create admin, activate, deactivate any user and block a customer)
 - manage categories (add ,delete ,modify)
