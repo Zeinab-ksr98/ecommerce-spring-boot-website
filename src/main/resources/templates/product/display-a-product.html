@@ -87,8 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
-<!--content of the pade-->
-<div class="container mt-1">
+<!--content of the page-->
+<h3><a th:href="@{/home}" style="text-decoration: none"><h4><img width="20" height="20" src="https://img.icons8.com/deco/48/back.png" alt="back"/><span>back</span></h4></a>
+</h3>
+    <div class="container ">
 
     <div class="product-card">
         <div class="product-image">
@@ -96,23 +98,27 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="product-details">
             <div>
-                <h1 class="card__title" th:text="${product.name}"></h1>
-                <span class="card__heart">
+                <h1 class="card__title" >
+                    <span th:text="${product.name}"></span>
+                    <span class="card__heart">
                     <a th:href="@{/add-wish/{pID}(pID=${product.id})}" >
                         <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/155fa9/like--v1.png" alt="like--v1"/>
                     </a>
-                </span>
-            </div>
+                </span></h1>
 
-            <h2 class="card__subtitle" th:text="${product.description}"></h2>
-            <h5 class="card-title">
+            </div>
+            <h4 class="card-title">
                 <span class="badge badge-primary" th:if="${product.discount != 0}" th:text="${'-' + product.discount + '%'}">Discount</span>
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
+            </h4>
+            <h3 class="card-subtitle mb-2 text-muted">
                             <span th:if="${product.discount != 0}" style="text-decoration: line-through;"
                                   th:text="${'Original$' + product.price}"></span>
                 <span th:text="${'$' + (product.price - (product.price * product.discount / 100))}"></span>
-            </h6>
+            </h3>
+
+            <h4 class="card__subtitle" th:text="${product.description}"></h4>
+
+
             <div style="color:#155FA9 ">
                 <button type="button" class="btn" style="background: transparent; border: 2px solid #155FA9;"
                         th:if="${product.availability}" th:onclick="'addToCart(' + ${product.id} + ');'">
