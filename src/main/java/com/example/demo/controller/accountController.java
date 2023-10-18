@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Address;
-import com.example.demo.model.Category;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,7 +32,7 @@ public class accountController {
 
     @GetMapping(value = "/Main")
     public String home(Model model) {
-        return "Main";
+        return "index";
     }
 
     @GetMapping(value = "/SignIn")
