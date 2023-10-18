@@ -179,7 +179,7 @@
             <td th:text="${cartItem.product.price}+'$'" ></td>
             <td >
                 <span>
-                    <a th:href="@{/modify-quantity-cart/{pID}/{q}(pID=${cartItem.product.id},q=${cartItem.quantity -1})}">
+                    <a th:if="${cartItem.quantity > 1}"  th:href="@{/modify-quantity-cart/{pID}/{q}(pID=${cartItem.product.id},q=${cartItem.quantity -1})}">
                         <img width="10" height="10" src="https://img.icons8.com/emoji/48/minus-emoji.png" alt="minus-emoji"/>
                     </a>
                 </span>

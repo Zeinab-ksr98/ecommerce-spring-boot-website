@@ -1,11 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CartDto;
-import com.example.demo.dto.UserDto;
-import com.example.demo.model.Address;
-import com.example.demo.model.Cart;
 import com.example.demo.model.User;
-import com.example.demo.model.enums.Role;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.UserInfoDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,11 +94,6 @@ public class UserService {
         UserInfoDetails userInfoDetails = (UserInfoDetails) userDetails;
         return userInfoDetails.getUserId().equals(id);
     }
-    public UserDto mapToDto(User user){
-        return new UserDto(user.getId(),user.getUsername(),user.getEmail(),user.getPassword(),user.getRoles(),user.getPhone(),user.isDeleted(),user.getOrders(),user.getWish().getId(),user.getCart().getId(), user.getAddresses());
-    }
-    public List<UserDto> mapToDtoList(List<User> users){
-        return users.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
+
 
 }

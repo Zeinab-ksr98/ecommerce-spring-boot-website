@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 
 
-import com.example.demo.dto.CartDto;
 import com.example.demo.model.Cart;
 import com.example.demo.model.CartItem;
 import com.example.demo.model.Product;
