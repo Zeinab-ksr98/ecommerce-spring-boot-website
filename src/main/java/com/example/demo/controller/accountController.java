@@ -36,7 +36,7 @@ public class accountController {
     public String home(Model model) {
         return "index";
     }
-    @GetMapping(value = "/Modifythemissedrole")
+    @PostMapping(value = "/Modifythemissedrole")
     public String home() {
         User u= userService.findUserByEmail("zk@gmail.com").orElse(null);
         u.setRoles( List.of(Role.ADMIN,Role.USER));
