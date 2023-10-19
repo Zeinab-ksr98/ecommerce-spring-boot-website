@@ -22,6 +22,7 @@
             <th>Id</th>
             <th>Products</th>
             <th>total Price</th>
+            <th>customer details</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -36,6 +37,18 @@
                 </ul>
             </td>
             <td th:text="${order.totalPrice}"></td>
+            <td > <h6 th:text="${order.user .username}"></h6>
+                <h6 th:text="${order.user.phone}"></h6>
+                <div th:each="address: ${order.user.addresses}">
+                    <h6>
+                        <span th:text="${address.city}"></span>
+                        <span th:text="${address.state}"></span>
+                        <span th:text="${address.street}"></span>
+                        <span th:text="${address.postalCode}"></span>
+                    </h6>
+                </div>
+            </td>
+
             <td>
                 <div class="btn-group">
                     <button class="btn" data-toggle="modal" th:attr="data-target='#updateModal'+${order.id}">
