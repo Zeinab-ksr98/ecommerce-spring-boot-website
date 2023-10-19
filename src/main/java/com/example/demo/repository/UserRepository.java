@@ -20,7 +20,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query(value = "select * from users where email = ?1 and username = ?2", nativeQuery = true)
     Optional<User> findUserByEmailAndName(String email,String username);
-
+//    @Query(value = "select * from users where wish=?1", nativeQuery = true)
+//    User findUserByWishId(long wid);
     boolean existsByEmail(String email);
 
 }

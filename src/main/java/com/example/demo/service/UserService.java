@@ -35,6 +35,9 @@ public class UserService {
     public Optional<User> findUserByEmailAndUserName(String username,String email){
         return userRepository.findUserByEmailAndName(email,username);
     }
+//    public User findUserByWishId(long wid){
+//        return userRepository.findUserByWishId(wid);
+//    }
     public User save(User user){
         return userRepository.save(user);
     }

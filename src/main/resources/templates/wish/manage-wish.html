@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Include Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+<div class="container bg-white py-4 rounded shadow mt-2">
+    <!--    inproceess-->
+    <h4>Orders In Process</h4>
+    <table class="table  table-bordered rounded ">
+        <thead class="table-primary">
+        <tr>
+            <th>customer name</th>
+            <th>customer details</th>
+            <th>Products</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}" >
+            <td >
+                <h6 th:text="${user.username}"></h6>
+            </td>
+            <td >
+                <h6 th:text="${user.phone}"></h6>
+                <div th:each="address: ${user.addresses}">
+                    <h6>
+                        <span th:text="${address.city}"></span>
+                        <span th:text="${address.state}"></span>
+                        <span th:text="${address.street}"></span>
+                        <span th:text="${address.postalCode}"></span>
+                    </h6>
+                </div>
+            </td>
+            <td>
+                <ul class="list-unstyled">
+                    <li th:each="wish : ${user.getWish().productList}">
+                        <h6 > <span th:text="${wish.name}"></span> </h6>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

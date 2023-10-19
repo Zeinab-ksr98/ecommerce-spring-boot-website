@@ -33,10 +33,16 @@ public class wishController {
 
     @GetMapping(value = "/display-wishList")
     @PreAuthorize("hasAuthority('USER')")
-    public String displayOrders(Model model) {
+    public String displayWish(Model model) {
             User customUser = userService.getCurrentUser();
             model.addAttribute("wish",wishService.getWishById(customUser.getWish().getId()));
             return "wish/wishlist";
+    }
+    @GetMapping(value = "/manage-wishList")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String manageWishes(Model model) {
+        model.addAttribute("users",userService.getAllUsers());
+        return "wish/manage-wish";
     }
 
     @GetMapping(value="/add-wish/{pID}")
