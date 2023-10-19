@@ -11,6 +11,16 @@ Java Spring Boot
 - Html
 - CSS
 - Bootstrap
+  ## step by step how to use
+[    ecommerce-project-zeinabksr.up.railway.app/main
+](https://ecommerce-project-zeinabksr.up.railway.app/Main)  
+  - Admin account:azk
+  - Customeraccount:czksr (or create yours by sign up)
+  - pasward: 123
+## step by step how to use
+the following link is step by step tutorial for features
+https://scribehow.com/shared/Ecommerce_spring_boot_website__vD8Fb2BQS3iDc22W8dwWGQ
+
 ## features
 1. create a customer roled account 
 2. log in
@@ -39,7 +49,4 @@ Java Spring Boot
 - manage his products (add ,delete ,modify)
 - sort products accourding to availabitity
 - manage orders (modify their status)
-## step by step how to use
-the following link is step by step tutorial for features
-https://scribehow.com/shared/Ecommerce_spring_boot_website__vD8Fb2BQS3iDc22W8dwWGQ
 
