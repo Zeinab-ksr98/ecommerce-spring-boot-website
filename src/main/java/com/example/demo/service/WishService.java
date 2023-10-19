@@ -25,9 +25,7 @@ public class WishService {
     public Wish getWishById(Long id){
         return wishRepository.findById(id).orElse(null);
     }
-//    public User getUserByWishId(Long id){
-//        return userRepository.findUserByWishId(id);
-//    }
+
 
     public Wish save(Wish wish){
         return wishRepository.save(wish);
@@ -36,8 +34,5 @@ public class WishService {
     //no need for it now
     public List<Wish> getAllWishs(){
         return wishRepository.findAll();
-    }
-    public void deleteWish(Long id){
-        wishRepository.deleteById(id );
     }
 }
