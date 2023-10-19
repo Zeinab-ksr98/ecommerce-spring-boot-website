@@ -36,13 +36,7 @@ public class accountController {
     public String home(Model model) {
         return "index";
     }
-    @PostMapping(value = "/Modifythemissedrole")
-    public String home() {
-        User u= userService.findUserByEmail("zk@gmail.com").orElse(null);
-        u.setRoles( List.of(Role.ADMIN,Role.USER));
-        userService.save(u);
-        return "index";
-    }
+
 
     @GetMapping(value = "/SignIn")
     public String SignIn(Model model) {
