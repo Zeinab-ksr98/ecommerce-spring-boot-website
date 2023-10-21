@@ -49,4 +49,5 @@ https://scribehow.com/shared/Ecommerce_spring_boot_website__vD8Fb2BQS3iDc22W8dwW
 - manage his products (add ,delete ,modify)
 - sort products accourding to availabitity
 - manage orders (modify their status)
+- view wish list of each user
 
