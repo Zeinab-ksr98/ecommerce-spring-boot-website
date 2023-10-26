@@ -21,11 +21,36 @@ essence of faith with our thoughtfully chosen products
 For building and running the application you need:
 - [Maven 3](https://maven.apache.org)
 ## Running the application locally
-you can use the Spring Boot Maven plugin like so:
-```shell
-mvn spring-boot:run
+## Quickstart
+1. Clone the repository
+2. Open the project in your IDE: IntelliJ IDEA (recommended) 
+3. Configure the database connection in `application.properties` file (check the DataBase section below for more info) and comment the following lines:<br>
 ```
-  ## demo
+ spring.datasource.url=jdbc:mysql://containers-us-west-39.railway.app:7799/railway
+spring.datasource.username=root
+spring.datasource.password=Ssbv4Pc8FXkEdRDHSFza
+```
+4. Run the project 
+5. Open http://localhost:8080/Main in your browser!
+### Database
+
+MySQLcan be used as the database for this project. The database connection can be configured in the `application.properties` file, with the appropriate values for the following properties:
+
+```
+properties
+db.url=jdbc:mysql://[ip address of db]:[port of db]
+    db.username=[username]
+    db.password=[password, if any]
+```
+similar to the commented lines:
+```
+#to use local sql
+#spring.datasource.url=jdbc:mysql://localhost:3306/finalspringboot
+#spring.datasource.username=root
+#spring.datasource.password=Yazahraa98alireda
+```
+
+## demo
 [    ecommerce-project-zeinabksr.up.railway.app/main
 ](https://ecommerce-project-zeinabksr.up.railway.app/Main)  
   - Admin account:azk
