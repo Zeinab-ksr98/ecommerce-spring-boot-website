@@ -5,13 +5,27 @@ artwork, literature, fashion, and home decor. Our commitment to quality, authent
 significance ensures a rich representation of Islamic heritage. Explore, connect, and discover the
 essence of faith with our thoughtfully chosen products
 ## Back-end language:
-Java Spring Boot
+- Java Spring Boot
+- JPA / Hibernate
+- MYSQL
+- Thymeleaf
+- Maven
+- Lombok
+- SQL Query
 ## Front-end language
 - JavaScript
 - Html
 - CSS
 - Bootstrap
-  ## step by step how to use
+## Requirements
+For building and running the application you need:
+- [Maven 3](https://maven.apache.org)
+## Running the application locally
+you can use the Spring Boot Maven plugin like so:
+```shell
+mvn spring-boot:run
+```
+  ## demo
 [    ecommerce-project-zeinabksr.up.railway.app/main
 ](https://ecommerce-project-zeinabksr.up.railway.app/Main)  
   - Admin account:azk
