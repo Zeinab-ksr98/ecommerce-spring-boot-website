@@ -58,6 +58,7 @@ similar to the commented lines:
   - pasward: 123
 ## step by step how to use
 the following link is step by step tutorial for features
+
 https://github.com/Zeinab-ksr98/ecommerce-spring-boot-website/assets/87263087/22f1a3a0-508a-45cc-bc5e-a4e32990935f
 
 https://scribehow.com/shared/Ecommerce_spring_boot_website__vD8Fb2BQS3iDc22W8dwWGQ
